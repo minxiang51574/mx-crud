@@ -32,15 +32,36 @@ export default {
       },
     };
   },
+  created() {
+    // 初始化分页
+    this.pageInit();
+  },
   methods: {
+    // 初始化
+    pageInit() {
+      this.defaultPage.total = this.$parent.page.total || 0;
+      this.defaultPage.currentPage = this.$parent.page.current || 1;
+      this.defaultPage.pageSize = this.$parent.page.size || 10;
+      this.defaultPage.pageSizes = this.$parent.page.sizes || [
+        10, 20, 30, 40, 50, 100,
+      ];
+      this.defaultPage.background = this.$parent.page.background || true;
+    },
     // pageSize 改变
     sizeChange(val) {
       this.defaultPage.currentPage = 1;
       this.defaultPage.pageSize = val;
+      this.$parent.$emit("size-change", val);
     },
     // currentPage 改变
-    currentChange() {},
+    currentChange(val) {
+      this.$parent.$emit("current-change", val);
+    },
   },
 };
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.el-pagination {
+  text-align: right;
+}
+</style>

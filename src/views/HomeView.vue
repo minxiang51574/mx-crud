@@ -5,7 +5,13 @@
 -->
 <template>
   <div class="home">
-    <mx-crud :data="tableData" :option="listOption" :page.sync="page"></mx-crud>
+    <mx-crud
+      :data="tableData"
+      :option="listOption"
+      :page.sync="page"
+      @size-change="changeSize"
+      @current-change="currentChange"
+    ></mx-crud>
   </div>
 </template>
 
@@ -14,28 +20,7 @@ export default {
   name: "HomeView",
   data() {
     return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
+      tableData: [],
       page: {
         total: 100,
         currentPage: 1,
@@ -61,6 +46,45 @@ export default {
           },
         ],
       };
+    },
+  },
+  created() {
+    this.getData();
+  },
+  methods: {
+    changeSize(val) {
+      this.page.pageSize = val;
+      this.page.currentPage = 1;
+      this.getData();
+    },
+    currentChange(val) {
+      this.page.currentPage = val;
+      this.getData();
+    },
+    getData() {
+      this.tableData = [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄",
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄",
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄",
+        },
+      ];
+      this.page.total = this.tableData.length;
     },
   },
 };

@@ -28,6 +28,10 @@ export default {
         return [];
       },
     },
+    page: {
+      // 列表配置项
+      type: Object,
+    },
     option: {
       // 列表配置项
       type: Object,

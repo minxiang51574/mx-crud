@@ -65,6 +65,43 @@ tableData: [
 更新时间：2022/08/01
 
 ## 二、表格+分页
+![使用场景](./src/assets/2.png)
+**主体**
+```js
+ <mx-crud
+      :data="tableData"
+      :option="listOption"
+      :page.sync="page"
+      @size-change="changeSize"
+      @current-change="currentChange"
+></mx-crud>
+```
+<details>
+    <summary><font color=0094ff>数据及配置</font></summary> 
+
+```js
+
+   listOption() {
+      return {
+        column: [
+          {
+            label: "日期",
+            prop: "date",
+          },
+          {
+            label: "姓名",
+            prop: "name",
+          },
+          {
+            label: "地址",
+            prop: "address",
+          },
+        ],
+      };
+    },
+
+```
+</details>
 
 ## 三、搜索
 
