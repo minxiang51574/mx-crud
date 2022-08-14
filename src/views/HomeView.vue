@@ -11,7 +11,11 @@
       :page.sync="page"
       @size-change="changeSize"
       @current-change="currentChange"
-    ></mx-crud>
+    >
+      <template v-slot:menu>
+        <el-button type="primary" size="mini">menu插槽按钮</el-button>
+      </template>
+    </mx-crud>
   </div>
 </template>
 
@@ -31,6 +35,11 @@ export default {
   computed: {
     listOption() {
       return {
+        isShowmenu: true, // 是否显示操作栏
+        isViewBtn: false, // 是否显示查看
+        isEditBtn: true, // 是否显示编辑
+        isDelBtn: false, // 是否显示删除
+
         column: [
           {
             label: "日期",

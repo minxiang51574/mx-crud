@@ -7,7 +7,11 @@
   <div>
     <!-- 表格主体 -->
     <el-table :data="list">
-      <Column :columnOption="tableColumn"> </Column>
+      <Column :columnOption="tableColumn" :tableOption="tableOption">
+        <template v-slot:menu="{ row }">
+          <slot name="menu" :row="row"></slot>
+        </template>
+      </Column>
     </el-table>
     <!-- 分页 -->
     <Page></Page>
@@ -44,15 +48,21 @@ export default {
   components: { Column, Page },
   data() {
     return {
-      tableColumn: [], // 表格列配置
+      tableColumn: [], // 表格列
       list: [], // 表格展示的数据
+      tableOption: {}, //配置项
     };
   },
   created() {
+    this.tableOption = this.deepClone(this.option);
+    console.log("tableOption", this.tableOption);
+
     //1.初始化列表数据
     this.dataInit();
-    //2.初始化列配置
+    //2.初始化列
     this.initTableColumn();
+    //3.获取配置项
+    // this.getOptionConfig();
   },
   mounted() {},
   methods: {
@@ -60,9 +70,14 @@ export default {
     dataInit() {
       this.list = this.data;
     },
-    //2.初始化列配置
+    //2.初始化表格列
     initTableColumn() {
       this.tableColumn = this.option.column.filter((o) => o.hide !== true);
+    },
+    //3.获取配置项
+    getOptionConfig() {
+      this.tableOption = this.deepClone(this.option);
+      // console.log("tableOption", this.tableOption);
     },
   },
 };
