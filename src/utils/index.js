@@ -95,3 +95,44 @@ export function validatenull(val) {
   }
   return false;
 }
+/**
+ * 日期控件集合
+ */
+export const dateList = [
+  "dates",
+  "date",
+  "datetime",
+  "datetimerange",
+  "daterange",
+  "week",
+  "month",
+  "dategrpup",
+  "year",
+];
+/**
+ * 搜索框获取动态组件
+ */
+export const getSearchType = (type) => {
+  console.log("111", type);
+
+  // yl新组件
+  if (type && type.includes("yl-")) return type.replace("yl-", "");
+  // 原avue组件
+  let result = "input";
+  if (["select", "radio", "checkbox", "switch"].includes(type)) {
+    result = "select";
+  } else if (["time", "timerange"].includes(type)) {
+    result = "time";
+  } else if (dateList.includes(type)) {
+    result = "date";
+  } else if (["cascader"].includes(type)) {
+    result = "cascader";
+  } else if (["number"].includes(type)) {
+    result = "input-number";
+  } else if (type === "network") {
+    result = "network";
+  } else if (type === "dimension") {
+    result = "dimension";
+  }
+  return "mx-" + result;
+};

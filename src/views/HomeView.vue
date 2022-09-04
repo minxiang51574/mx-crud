@@ -48,6 +48,8 @@ export default {
           {
             label: "姓名",
             prop: "name",
+            type: "input",
+            search: true, // 是否搜索
           },
           {
             label: "地址",

@@ -5,6 +5,8 @@
 -->
 <template>
   <div>
+    <!-- 搜索组件 -->
+    <header-search> </header-search>
     <!-- 表格主体 -->
     <el-table :data="list">
       <Column :columnOption="tableColumn" :tableOption="tableOption">
@@ -20,7 +22,8 @@
 
 <script type="text/javascript">
 import Column from "./column";
-import Page from "./Page";
+import HeaderSearch from "./headerSearch";
+import Page from "./page";
 
 export default {
   name: "mx-crud",
@@ -45,24 +48,48 @@ export default {
       },
     },
   },
-  components: { Column, Page },
+  components: { Column, Page, HeaderSearch },
   data() {
     return {
       tableColumn: [], // 表格列
       list: [], // 表格展示的数据
       tableOption: {}, //配置项
+      searchOption: [], // 搜索的配置
+      DIC: {}, // 字典集合
     };
   },
   created() {
-    this.tableOption = this.deepClone(this.option);
-    console.log("tableOption", this.tableOption);
-
     //1.初始化列表数据
     this.dataInit();
     //2.初始化列
     this.initTableColumn();
     //3.获取配置项
-    // this.getOptionConfig();
+    this.configInit();
+  },
+  computed: {
+    // 列的配置集合
+    columnOption() {
+      return this.tableOption.column || [];
+    },
+    // 返回所有的配置项  包括children里面的配置
+    propOption() {
+      let result = [];
+      const ctx = this;
+      // 递归查找所有的属性配置
+      function findProp(list) {
+        list.forEach((ele) => {
+          if (ele.prop) {
+            result.push(ele);
+          }
+          if (ele.children) {
+            ctx.isChild = true;
+            findProp(ele.children);
+          }
+        });
+      }
+      findProp(this.columnOption);
+      return result;
+    },
   },
   mounted() {},
   methods: {
@@ -75,9 +102,19 @@ export default {
       this.tableColumn = this.option.column.filter((o) => o.hide !== true);
     },
     //3.获取配置项
-    getOptionConfig() {
+    configInit() {
       this.tableOption = this.deepClone(this.option);
-      // console.log("tableOption", this.tableOption);
+
+      // 初始化搜索配置
+      this.initSearchOption();
+    },
+    // 4.初始化搜索配置
+    initSearchOption() {
+      const option = this.deepClone(this.propOption || []).filter(
+        (item) => item.search === true
+      );
+      this.searchOption = option;
+      console.log("搜索配置", this.searchOption);
     },
   },
 };
