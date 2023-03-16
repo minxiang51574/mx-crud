@@ -4,12 +4,14 @@
  * @Description: 
 -->
 <template>
-  <div class="headerSearch" ref="tableSearch">
+  <div class="table-search" ref="tableSearch">
     <el-form
+      :class="b('search')"
       :model="searchForm"
       :inline="true"
-      :label-position="tableConfig.labelPosition"
+      :label-position="config.labelPosition"
       ref="searchForm"
+      @keyup.enter.native="searchChange"
     >
       <template v-for="(column, index) in $parent.searchOption">
         <el-form-item :key="index" :prop="column.prop">
@@ -18,15 +20,13 @@
             <span
               :title="column.label ? (column.labelAlias || column.label) + ' :' : ''"
               v-if="column.labelAlias || column.label"
-              >{{
-                column.label ? (column.labelAlias || column.label) + " :" : ""
-              }}</span
+              >{{ column.label ? (column.labelAlias || column.label) + " :" : "" }}</span
             >
           </template>
           <component
             v-model="searchForm[column.prop]"
             :ref="column.prop"
-            :is="getSearchType(column.type)"
+            :is="getSearchType(column.searchType)"
             :clearable="column.searchClearable"
             :defaultTime="
               column.searchDefaultTime || (column.more ? ['00:00:00', '23:59:59'] : '')
@@ -56,13 +56,10 @@
             :tags="column.searchTags"
             :value-format="column.valueFormat"
             :tpyeformat="column.tpyeformat"
-            :remote="column.remote"
-            :dicUrl="column.dicUrl"
             :dicData="column.dicData"
             :dicQuery="column.dicQuery"
             :dicMethod="column.dicMethod"
             :dicHeaders="column.dicHeaders"
-            :dicFormat="column.dicFormat"
             :isLoadMore="column.isLoadMore"
             :dicQueryFormat="column.dicQueryFormat"
             :pickerOptions="column.pickerOptions"
@@ -92,14 +89,14 @@
   </div>
 </template>
 <script>
-import tableConfig from "./tableConfig.js";
-import { getSearchType, getType } from "../../utils";
 import config from "./config.js";
-export default {
+import { getSearchType, getType } from "../../utils";
+import create from "../../core/create";
+export default create({
+  name: "crud",
   data() {
     return {
-      config: config,
-      tableConfig,
+      config,
       searchForm: {},
     };
   },
@@ -112,7 +109,13 @@ export default {
       this.getSearchType = getSearchType;
       this.getType = getType;
     },
+    // 搜索回调
+    searchChange() {
+      setTimeout(() => {
+        this.$parent.$emit("search-change");
+      }, 0);
+    },
   },
-};
+});
 </script>
 <style scoped lang="scss"></style>

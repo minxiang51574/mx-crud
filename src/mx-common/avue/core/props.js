@@ -77,7 +77,7 @@ export default function () {
         type: String,
         default: ''
       },
-      dicUrl: {
+      dicUrl: { 
         type: String,
         default: ''
       },
@@ -198,9 +198,6 @@ export default function () {
       idKey: function () {
         return this.props.id || this.propsDefault.id;
       },
-      valueObj: function () {
-        return this.props.valueObj || false;
-      }
     },
     created() { },
     methods: {

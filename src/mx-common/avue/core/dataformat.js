@@ -109,8 +109,6 @@ export const getCellType = type => {
  * 动态获取组件
  */
 export const getComponent = (type, component) => {
-  // yl新组件
-  if (type && type.includes('yl-')) return type.replace('yl-', '')
   // 原avue组件
   let result = 'input';
   if (!validatenull(component)) {

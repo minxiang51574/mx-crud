@@ -1,3 +1,8 @@
+/*
+ * @Author: Mx
+ * @Date: 2021-12-17 14:42:02
+ * @Description: 
+ */
 // crud配置文件
 export default {
   // 标题
@@ -5,19 +10,26 @@ export default {
   // 尺寸
   menuWidth: 120,
   menuXsWidth: 100,
-  align: 'left', //  表格列单元格对齐
-  menuAlign: 'center',
-  headerAlign: 'left',
+  align: 'left', //  表格列配置-对齐方式-默认
+  indexLabel: '序号',
+  isShowmenu: true, // 是否显示操作栏
+
+  isViewBtn: true, // 是否显示查看
+  isEditBtn: true, // 是否显示编辑
+  isDelBtn: true, // 是否显示删除
+  labelPosition: "left", // 表单label的位置 
   // 图标
+
+  addBtnIcon: 'iconfont el-icon-circle-plus-outline',
+  searchBtnIcon: 'iconfont el-icon-search',
+
   cancelBtnIcon: 'el-icon-delete',
   viewBtnIcon: 'iconfont iconchakanxiangqing',
   editBtnIcon: 'iconfont iconbianji1 font-16',
   delBtnIcon: 'iconfont iconshanchu2 font-16',
-  addBtnIcon: 'icon-iconfont iconfont iconxinzeng',
   chartBtnIcon: 'icon-iconfont iconfont icontongjipingtai-tubiaomoshi',
   printBtnIcon: 'el-icon-plus',
   excelBtnIcon: 'el-icon-plus',
-  searchBtnIcon: 'icon-iconfont iconfont iconsousuo1',
   emptyBtnIcon: 'iconfont iconqingkong',
   saveBtnIcon: 'el-icon-check',
   columnBtnIcon: 'el-icon-menu',
@@ -73,7 +85,6 @@ export default {
   pageBackground: true,
   page: true,
   menu: true,
-  indexLabel: '序号',
   filterMultiple: true,
   calcHeight: 0,
   title: '表格标题',
@@ -81,7 +92,6 @@ export default {
   dateDefault: true,
   // 搜索参数
   searchMultiple: ['checkbox', 'tree', 'select'],
-  labelPosition: 'top', // 表单label的位置
   labelWidth: 200, // 表单label的宽度
   border: true // 列表是否有border
 };

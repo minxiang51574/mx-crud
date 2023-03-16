@@ -1,15 +1,54 @@
-<!--
- * @Author: mn
- * @Date: 2020-12-11 14:17:35
- * @Description: crud主文件
--->
 <template>
-  <div>
+  <div :class="b()">
+    <!-- 顶部操作栏 -->
+    <div :class="b('menu')">
+      <div :class="b('left')">
+        <el-button
+          type="primary"
+          @click="rowAdd"
+          :icon="config.addBtnIcon"
+          :size="isMediumSize"
+          :disabled="tableOption.addDisabled"
+          v-if="vaildData(tableOption.addBtn, true)"
+          >新增</el-button
+        >
+        <el-button
+          type="primary"
+          @click="searchChange"
+          :icon="config.searchBtnIcon"
+          :size="isMediumSize"
+          :loading="tableLoading"
+          class="btn-query"
+          v-if="vaildData(tableOption.search, true)"
+          >查询</el-button
+        >
+        <el-button
+          type="info"
+          @click="exportExcel"
+          icon="iconfont icondaochu1"
+          :size="isMediumSize"
+          :loading="exportLoading"
+          v-if="vaildData(tableOption.exportBtn, false)"
+          >导出</el-button
+        >
+      </div>
+      <div :class="b('right')"></div>
+    </div>
     <!-- 搜索组件 -->
     <HeaderSearch> </HeaderSearch>
     <!-- 表格主体 -->
-    <el-table :data="list">
-      <Column :columnOption="tableColumn" :tableOption="tableOption">
+    <el-table
+      :data="list"
+      v-loading="tableLoading"
+      :border="vaildData(tableOption.border, config.border)"
+    >
+      <Column :tableColumn="tableColumn" :tableOption="tableOption">
+        <!-- 每列的自定义slot -->
+        <template v-for="item in propOption" slot-scope="scope" :slot="item.prop">
+          <slot :row="scope.row" :name="item.prop"></slot>
+        </template>
+
+        <!-- 操作栏 自定义slot-->
         <template v-slot:menu="{ row }">
           <slot name="menu" :row="row"></slot>
         </template>
@@ -25,6 +64,7 @@ import Column from "./column";
 import HeaderSearch from "./headerSearch";
 import Page from "./page";
 import create from "../../core/create";
+import config from "./config.js";
 export default create({
   name: "crud",
   props: {
@@ -39,6 +79,11 @@ export default create({
       // 列表配置项
       type: Object,
     },
+    tableLoading: {
+      // 表格loading
+      type: Boolean,
+      default: false,
+    },
     option: {
       // 列表配置项
       type: Object,
@@ -51,6 +96,7 @@ export default create({
   components: { Column, Page, HeaderSearch },
   data() {
     return {
+      config,
       tableColumn: [], // 表格列
       list: [], // 表格展示的数据
       tableOption: {}, //配置项
@@ -90,6 +136,12 @@ export default create({
       findProp(this.columnOption);
       return result;
     },
+    isMediumSize() {
+      return this.controlSize === "medium" ? "small" : this.controlSize;
+    },
+    controlSize() {
+      return this.tableOption.size || "medium";
+    },
   },
   mounted() {},
   methods: {
@@ -115,6 +167,18 @@ export default create({
       );
       this.searchOption = option;
       console.log("搜索配置", this.searchOption);
+    },
+    // 添加
+    rowAdd() {
+      if (!this.tableOption.customAdd) {
+        this.$refs.dialogForm.show("add");
+      } else {
+        this.$emit("custom-add");
+      }
+    },
+    // 搜索
+    searchChange() {
+      this.$refs.headerSearch.searchChange();
     },
   },
 });

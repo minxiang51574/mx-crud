@@ -11,8 +11,13 @@
       :page.sync="page"
       @size-change="changeSize"
       @current-change="currentChange"
+      @search-change="searchChange"
     >
-      <template v-slot:menu>
+      <template v-slot:zdy="{ row }">
+        {{ row }}
+      </template>
+      <!-- 操作栏配置-自定义操作栏 -->
+      <template #menu>
         <el-button type="primary" size="mini">menu插槽按钮</el-button>
       </template>
     </mx-crud>
@@ -35,24 +40,73 @@ export default {
   computed: {
     listOption() {
       return {
-        isShowmenu: true, // 是否显示操作栏
-        isViewBtn: false, // 是否显示查看
-        isEditBtn: true, // 是否显示编辑
-        isDelBtn: false, // 是否显示删除
+        isShowmenu: true, // 操作栏配置-是否显示操作栏
+        isViewBtn: true, // 操作栏配置-是否显示查看
+        isEditBtn: false, // 操作栏配置-是否显示编辑
+        isDelBtn: true, // 操作栏配置-是否显示删除
+        align: "center", // 表格列配置-对齐方式
+        index: true, // 表格列配置-索引
         column: [
           {
-            label: "日期",
-            prop: "date",
-          },
-          {
-            label: "姓名",
+            label: "姓名1",
             prop: "name",
-            type: "input",
-            search: true, // 是否搜索
+            search: true, // 表格列配置-是否搜索
+            width: 200, // 表格列配置-宽度
           },
           {
-            label: "地址",
+            label: "自定义列",
+            prop: "zdy",
+            slot: true, // 表格列配置-自定义列
+          },
+          {
+            label: "多选框",
+            prop: "selects",
+            multiple: true,
+            search: true,
+            searchType: "select", // 搜索-定义类型
+            dicData: [
+              {
+                label: "紧急公告",
+                value: "1",
+              },
+              {
+                label: "上线公告",
+                value: "2",
+              },
+              {
+                label: "业务公告",
+                value: "3",
+              },
+            ],
+          },
+          {
+            label: "状态",
+            prop: "status",
+            formatter: (row) => {
+              // 表格列配置-筛选
+              const map = new Map([
+                [0, `<i class="class1"></i> 未开始`],
+                [1, `<i class="class2"></i> 成功`],
+                [2, `<i class="class3"></i> 已完成`],
+              ]);
+              return map.get(row.status);
+            },
+          },
+          {
+            label: "列隐藏",
+            prop: "lyc",
+            hide: true, // 表格列配置-列隐藏
+          },
+          {
+            label: "日期2",
+            prop: "date",
+            align: "left", // 表格列配置-对齐方式
+          },
+          {
+            label: "地址3",
             prop: "address",
+            overHidden: true, // 表格列配置-内容超出隐藏
+            width: 100, // 表格列配置-宽度
           },
         ],
       };
@@ -71,27 +125,37 @@ export default {
       this.page.currentPage = val;
       this.getData();
     },
+    // 触发按钮查询
+    searchChange(params) {
+      this.searchFun(this.rangHandle(params), 1);
+    },
+    // 查询方法
+    searchFun() {},
     getData() {
       this.tableData = [
         {
           date: "2016-05-02",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄",
+          status: 0,
         },
         {
           date: "2016-05-04",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1517 弄",
+          status: 1,
         },
         {
           date: "2016-05-01",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1519 弄",
+          status: 1,
         },
         {
           date: "2016-05-03",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄",
+          status: 2,
         },
       ];
       this.page.total = this.tableData.length;

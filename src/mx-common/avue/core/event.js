@@ -1,3 +1,8 @@
+/*
+ * @Author: Mx
+ * @Date: 2023-03-16 10:05:56
+ * @Description: 
+ */
 import find from 'lodash/find'
 /**
  * 供各小组件混入
@@ -71,7 +76,7 @@ export default function () {
           this.$emit('input', result);
           this.$emit('change', result);
         }
-      },
+      }, 
       // 自定义选项文字
       getLabelText(item) {
         if (typeof this.tpyeformat === 'function') {

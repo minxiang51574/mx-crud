@@ -4,7 +4,7 @@
  * @Description: 
 -->
 <template>
-  <div>
+  <div :class="b('pagination')">
     <el-pagination
       element-loading-spinner="el-icon-loading"
       element-loading-text="页码数据加载中..."

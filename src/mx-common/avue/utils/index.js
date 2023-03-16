@@ -1,6 +1,7 @@
 /**
  * 对象深拷贝
  */
+ import { COMPONENTNAME } from '../core/constant';
  export const deepClone = (data) => {
     var type = getObjType(data);
     var obj;
@@ -124,7 +125,7 @@
     } else if (type === 'dimension') {
       result = 'dimension';
     }
-    return 'mx-' + result;
+    return COMPONENTNAME + result;
   };
   
   export const getType = (column) => {
