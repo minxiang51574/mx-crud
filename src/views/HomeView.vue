@@ -9,7 +9,7 @@
       :data="tableData"
       :option="listOption"
       :page.sync="page"
-      @size-change="changeSize"
+      @size-change="sizeChange"
       @current-change="currentChange"
       @search-change="searchChange"
     >
@@ -25,16 +25,13 @@
 </template>
 
 <script>
+import mixin from "@/mx-common/mixins/mixin";
 export default {
   name: "HomeView",
+  mixins: [mixin],
   data() {
     return {
       tableData: [],
-      page: {
-        total: 100,
-        currentPage: 1,
-        pageSize: 10,
-      },
     };
   },
   computed: {
@@ -123,38 +120,6 @@ export default {
     this.getData();
   },
   methods: {
-    changeSize(val) {
-      this.page.pageSize = val;
-      this.page.currentPage = 1;
-      this.getData();
-    },
-    currentChange(val) {
-      this.page.currentPage = val;
-      this.getData();
-    },
-    // 触发按钮查询
-    searchChange(params) {
-      console.log("搜索参数", params);
-      this.searchFun(params, 1);
-    },
-    // 查询方法
-    async searchFun(params, currentPage) {
-      this.loading = true;
-      // 传入参数有current
-      if (currentPage) {
-        this.page.currentPage = currentPage;
-      }
-      const filnalParams = this.searchFunParamsHandle(params);
-      console.log("最后的请求参数filnalParams:", filnalParams);
-    },
-    // 列表查询参数处理
-    searchFunParamsHandle(params) {
-      let filnalParams = Object.assign(
-        { page: this.page.currentPage, size: this.page.pageSize },
-        params
-      );
-      return filnalParams;
-    },
     getData() {
       this.tableData = [
         {
