@@ -39,7 +39,6 @@ export default {
         isViewBtn: false, // 是否显示查看
         isEditBtn: true, // 是否显示编辑
         isDelBtn: false, // 是否显示删除
-
         column: [
           {
             label: "日期",

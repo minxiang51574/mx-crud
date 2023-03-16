@@ -1,28 +1,23 @@
-/*
- * @Author: Mx
- * @Date: 2022-08-14 21:12:36
- * @Description:
- */
 /**
  * 对象深拷贝
  */
 export const deepClone = (data) => {
   var type = getObjType(data);
   var obj;
-  if (type === "array") {
+  if (type === 'array') {
     obj = [];
-  } else if (type === "object") {
+  } else if (type === 'object') {
     obj = {};
   } else {
     // 不再具有下一层次
     return data;
   }
-  if (type === "array") {
+  if (type === 'array') {
     for (var i = 0, len = data.length; i < len; i++) {
       delete data[i].$parent;
       obj.push(deepClone(data[i]));
     }
-  } else if (type === "object") {
+  } else if (type === 'object') {
     for (var key in data) {
       delete data.$parent;
       obj[key] = deepClone(data[key]);
@@ -37,19 +32,19 @@ export const deepClone = (data) => {
 export const getObjType = (obj) => {
   var toString = Object.prototype.toString;
   var map = {
-    "[object Boolean]": "boolean",
-    "[object Number]": "number",
-    "[object String]": "string",
-    "[object Function]": "function",
-    "[object Array]": "array",
-    "[object Date]": "date",
-    "[object RegExp]": "regExp",
-    "[object Undefined]": "undefined",
-    "[object Null]": "null",
-    "[object Object]": "object",
+    '[object Boolean]': 'boolean',
+    '[object Number]': 'number',
+    '[object String]': 'string',
+    '[object Function]': 'function',
+    '[object Array]': 'array',
+    '[object Date]': 'date',
+    '[object RegExp]': 'regExp',
+    '[object Undefined]': 'undefined',
+    '[object Null]': 'null',
+    '[object Object]': 'object',
   };
   if (obj instanceof Element) {
-    return "element";
+    return 'element';
   }
   return map[toString.call(obj)];
 };
@@ -59,7 +54,7 @@ export const getObjType = (obj) => {
  */
 export const vaildData = (val, dafult) => {
   // console.log('vaildData')
-  if (typeof val === "boolean") {
+  if (typeof val === 'boolean') {
     return val;
   }
   return !validatenull(val) ? val : dafult;
@@ -71,23 +66,23 @@ export const vaildData = (val, dafult) => {
  *@return [type] 空值返回真 其他返回假
  */
 export function validatenull(val) {
-  if (typeof val === "boolean") {
+  if (typeof val === 'boolean') {
     return false;
   }
-  if (typeof val === "number") {
+  if (typeof val === 'number') {
     return false;
   }
   if (val instanceof Array) {
     if (val.length === 0) return true;
   } else if (val instanceof Object) {
-    if (JSON.stringify(val) === "{}") return true;
+    if (JSON.stringify(val) === '{}') return true;
   } else {
     if (
-      val === "null" ||
+      val === 'null' ||
       val == null ||
-      val === "undefined" ||
+      val === 'undefined' ||
       val === undefined ||
-      val === ""
+      val === ''
     ) {
       return true;
     }
@@ -99,40 +94,30 @@ export function validatenull(val) {
  * 日期控件集合
  */
 export const dateList = [
-  "dates",
-  "date",
-  "datetime",
-  "datetimerange",
-  "daterange",
-  "week",
-  "month",
-  "dategrpup",
-  "year",
+  'dates',
+  'date',
+  'datetime',
+  'datetimerange',
+  'daterange',
+  'week',
+  'month',
+  'dategrpup',
+  'year',
 ];
-/**
- * 搜索框获取动态组件
- */
-export const getSearchType = (type) => {
-  console.log("111", type);
 
-  // yl新组件
-  if (type && type.includes("yl-")) return type.replace("yl-", "");
-  // 原avue组件
-  let result = "input";
-  if (["select", "radio", "checkbox", "switch"].includes(type)) {
-    result = "select";
-  } else if (["time", "timerange"].includes(type)) {
-    result = "time";
-  } else if (dateList.includes(type)) {
-    result = "date";
-  } else if (["cascader"].includes(type)) {
-    result = "cascader";
-  } else if (["number"].includes(type)) {
-    result = "input-number";
-  } else if (type === "network") {
-    result = "network";
-  } else if (type === "dimension") {
-    result = "dimension";
+export const getType = (column) => {
+  const type = column.type;
+  const more = column.more || false;
+  if (more) {
+    if (type === 'date') {
+      return 'daterange';
+    } else if (type === 'datetime') {
+      return 'datetimerange';
+    } else if (type === 'time') {
+      return 'timerange';
+    } else {
+      return type;
+    }
   }
-  return "mx-" + result;
+  return type;
 };

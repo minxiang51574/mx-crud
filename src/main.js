@@ -1,7 +1,7 @@
 /*
  * @Author: Mx
- * @Date: 2022-08-01 21:12:59
- * @Description:
+ * @Date: 2022-08-14 21:30:04
+ * @Description: 
  */
 import Vue from "vue";
 import App from "./App.vue";
@@ -17,7 +17,7 @@ Vue.use(ElementUI);
 Vue.config.productionTip = false;
 
 // Avue组件库
-import Avue from "./components/index";
+import Avue from "./mx-common/avue/index";
 Vue.use(Avue);
 
 new Vue({
