@@ -35,7 +35,7 @@
       <div :class="b('right')"></div>
     </div>
     <!-- 搜索组件 -->
-    <HeaderSearch> </HeaderSearch>
+    <HeaderSearch v-model="searchForm" ref="headerSearch"> </HeaderSearch>
     <!-- 表格主体 -->
     <el-table
       :data="list"
@@ -99,6 +99,7 @@ export default create({
       config,
       tableColumn: [], // 表格列
       list: [], // 表格展示的数据
+      searchForm: {}, // 搜索表单
       tableOption: {}, //配置项
       searchOption: [], // 搜索的配置
       DIC: {}, // 字典集合

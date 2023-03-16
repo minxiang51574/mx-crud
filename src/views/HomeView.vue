@@ -60,8 +60,8 @@ export default {
           },
           {
             label: "多选框",
-            prop: "selects",
-            multiple: true,
+            prop: "status",
+            // multiple: true,
             search: true,
             searchType: "select", // 搜索-定义类型
             dicData: [
@@ -78,6 +78,13 @@ export default {
                 value: "3",
               },
             ],
+          },
+          {
+            label: "时间",
+            prop: "date",
+            hide: true,
+            search: true,
+            searchType: "date", // 搜索-定义类型
           },
           {
             label: "状态",
@@ -127,10 +134,27 @@ export default {
     },
     // 触发按钮查询
     searchChange(params) {
-      this.searchFun(this.rangHandle(params), 1);
+      console.log("搜索参数", params);
+      this.searchFun(params, 1);
     },
     // 查询方法
-    searchFun() {},
+    async searchFun(params, currentPage) {
+      this.loading = true;
+      // 传入参数有current
+      if (currentPage) {
+        this.page.currentPage = currentPage;
+      }
+      const filnalParams = this.searchFunParamsHandle(params);
+      console.log("最后的请求参数filnalParams:", filnalParams);
+    },
+    // 列表查询参数处理
+    searchFunParamsHandle(params) {
+      let filnalParams = Object.assign(
+        { page: this.page.currentPage, size: this.page.pageSize },
+        params
+      );
+      return filnalParams;
+    },
     getData() {
       this.tableData = [
         {

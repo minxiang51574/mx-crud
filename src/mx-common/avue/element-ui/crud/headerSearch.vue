@@ -91,6 +91,7 @@
 <script>
 import config from "./config.js";
 import { getSearchType, getType } from "../../utils";
+import { formInitVal } from "../../core/dataformat";
 import create from "../../core/create";
 export default create({
   name: "crud",
@@ -108,12 +109,15 @@ export default create({
     init() {
       this.getSearchType = getSearchType;
       this.getType = getType;
+      this.dataformat();
     },
     // 搜索回调
     searchChange() {
-      setTimeout(() => {
-        this.$parent.$emit("search-change");
-      }, 0);
+      this.$parent.$emit("search-change", this.searchForm);
+    },
+    // 过滤searchForm默认
+    dataformat() {
+      this.searchForm = this.deepClone(formInitVal(this.$parent.searchOption).searchForm);
     },
   },
 });
