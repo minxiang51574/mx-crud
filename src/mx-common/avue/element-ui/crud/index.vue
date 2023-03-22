@@ -68,15 +68,14 @@
     <Page></Page>
 
     <!-- 表单 -->
-    <Dialog-form ref="dialog-form">
-    </Dialog-form>
+    <Dialog-form v-model="tableForm" ref="dialogForm" :class="dialogClass"> </Dialog-form>
   </div>
 </template>
 
 <script type="text/javascript">
 import Column from "./column";
 import HeaderSearch from "./headerSearch";
-import DialogForm from './dialog-form'
+import DialogForm from "./dialog-form";
 import Page from "./page";
 import create from "../../core/create";
 import config from "./config.js";
@@ -106,6 +105,9 @@ export default create({
       default: () => {
         return {};
       },
+    },
+    dialogClass: {
+      type: String,
     },
   },
   components: { Column, Page, HeaderSearch, DialogForm },
@@ -164,6 +166,16 @@ export default create({
   },
   mounted() {},
   methods: {
+    // 对象克隆
+    rowClone(row) {
+      const rowData = {};
+      Object.keys(row).forEach((ele) => {
+        if (!["_parent", "children"].includes(ele)) {
+          rowData[ele] = row[ele];
+        }
+      });
+      return rowData;
+    },
     // 删除
     rowDel(row, index) {
       this.$emit("row-del", row, index);
