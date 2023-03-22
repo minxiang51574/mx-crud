@@ -12,6 +12,7 @@
       @size-change="sizeChange"
       @current-change="currentChange"
       @search-change="searchChange"
+      @row-del="rowDel"
     >
       <template v-slot:zdy="{ row }">
         {{ row }}
@@ -81,7 +82,7 @@ export default {
             prop: "date",
             hide: true,
             search: true,
-            searchType: "date", // 搜索-定义类型
+            searchType: "daterange", // 搜索-定义类型
           },
           {
             label: "状态",

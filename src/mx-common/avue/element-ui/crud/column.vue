@@ -47,7 +47,7 @@
         <!-- 查看按钮 -->
         <el-button
           type="text"
-          @click="view(row, $index)"
+          @click="rowView(row, $index)"
           v-if="vaildData(tableOption.isViewBtn, config.isViewBtn)"
           >查看</el-button
         >
@@ -94,18 +94,29 @@ export default create({
   },
   methods: {
     // 查看
-    view(row, index) {
+    rowView(row, index) {
       console.log("row", row, index);
-      this.$emit("rowView", row, index);
+      if (this.tableOption.customView) {
+        // 自定义查看
+        this.$emit("custom-view", row, index);
+      } else {
+        // 默认查看
+        this.viewRow(row, index);
+      }
+    },
+    /**
+     * 默认查看
+     */
+    viewRow(row, index) {
+      this.$emit("row-view", row, index);
     },
     // 编辑
     rowEdit(row, index) {
       this.$emit("rowEdit", row, index);
     },
-    // 查看
+    // 删除
     rowDel(row, index) {
-      console.log("row", row, index);
-      this.$emit("rowDel", row, index);
+      this.$emit("row-del", row, index);
     },
     /*
      *@Description: 处理文字

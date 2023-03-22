@@ -45,7 +45,7 @@
             :separator="column.separator"
             :showAllLevels="column.showAllLevels"
             :multiple="
-              config.searchMultiple.includes(column.type) &&
+              config.searchMultiple.includes(column.searchType) &&
               vaildData(column.searchMmultiple, false)
             "
             :parent="column.parent"
@@ -113,6 +113,7 @@ export default create({
     },
     // 搜索回调
     searchChange() {
+      console.log(this.$parent);
       this.$parent.$emit("search-change", this.searchForm);
     },
     // 过滤searchForm默认

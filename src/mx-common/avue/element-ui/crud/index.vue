@@ -1,3 +1,8 @@
+<!--
+ * @Author: Mx
+ * @Date: 2023-03-22 10:09:58
+ * @Description: 
+-->
 <template>
   <div :class="b()">
     <!-- 顶部操作栏 -->
@@ -42,7 +47,12 @@
       v-loading="tableLoading"
       :border="vaildData(tableOption.border, config.border)"
     >
-      <Column :tableColumn="tableColumn" :tableOption="tableOption">
+      <Column
+        :tableColumn="tableColumn"
+        :tableOption="tableOption"
+        @row-del="rowDel"
+        @row-view="rowView"
+      >
         <!-- 每列的自定义slot -->
         <template v-for="item in propOption" slot-scope="scope" :slot="item.prop">
           <slot :row="scope.row" :name="item.prop"></slot>
@@ -56,12 +66,17 @@
     </el-table>
     <!-- 分页 -->
     <Page></Page>
+
+    <!-- 表单 -->
+    <Dialog-form ref="dialog-form">
+    </Dialog-form>
   </div>
 </template>
 
 <script type="text/javascript">
 import Column from "./column";
 import HeaderSearch from "./headerSearch";
+import DialogForm from './dialog-form'
 import Page from "./page";
 import create from "../../core/create";
 import config from "./config.js";
@@ -93,15 +108,18 @@ export default create({
       },
     },
   },
-  components: { Column, Page, HeaderSearch },
+  components: { Column, Page, HeaderSearch, DialogForm },
   data() {
     return {
       config,
       tableColumn: [], // 表格列
       list: [], // 表格展示的数据
+      tableForm: {}, // 弹窗表单
       searchForm: {}, // 搜索表单
       tableOption: {}, //配置项
       searchOption: [], // 搜索的配置
+      boxType: "add", // 弹窗类型
+      tableIndex: -1, // 当前处理行的索引
       DIC: {}, // 字典集合
     };
   },
@@ -146,6 +164,17 @@ export default create({
   },
   mounted() {},
   methods: {
+    // 删除
+    rowDel(row, index) {
+      this.$emit("row-del", row, index);
+    },
+    //查看
+    rowView(row, index) {
+      this.tableForm = this.rowClone(row);
+      this.$emit("input", this.tableForm);
+      this.tableIndex = index;
+      this.$refs.dialogForm.show("view");
+    },
     //1.初始化列表数据
     dataInit() {
       this.list = this.data;

@@ -108,7 +108,6 @@
    * 搜索框获取动态组件
    */
   export const getSearchType = (type) => {
-    // 原avue组件
     let result = 'input';
     if (['select', 'radio', 'checkbox', 'switch'].includes(type)) {
       result = 'select';
@@ -129,19 +128,7 @@
   };
   
   export const getType = (column) => {
-    const type = column.type;
-    const more = column.more || false;
-    if (more) {
-      if (type === 'date') {
-        return 'daterange';
-      } else if (type === 'datetime') {
-        return 'datetimerange';
-      } else if (type === 'time') {
-        return 'timerange';
-      } else {
-        return type;
-      }
-    }
-    return type;
+    const searchType = column.searchType;
+    return searchType;
   };
   

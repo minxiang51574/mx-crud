@@ -1,7 +1,7 @@
 <!--
  * @Author: Mx
  * @Date: 2023-03-16 20:41:50
- * @Description: 
+ * @Description: 日期时间组件
 -->
 <template>
   <div :class="b()">
@@ -14,7 +14,7 @@
       range-separator="至"
       :start-placeholder="startPlaceholder"
       :end-placeholder="endPlaceholder"
-      :format="format"
+      :format="type === 'week' ? 'yyyy 第 WW 周' : format"
       :clearable="disabled ? false : clearable"
       :picker-options="pickerOptions"
       :value-format="valueFormat"
