@@ -52,6 +52,7 @@
         :tableOption="tableOption"
         @row-del="rowDel"
         @row-view="rowView"
+        @row-edit="rowEdit"
       >
         <!-- 每列的自定义slot -->
         <template v-for="item in propOption" slot-scope="scope" :slot="item.prop">
@@ -120,9 +121,9 @@ export default create({
       searchForm: {}, // 搜索表单
       tableOption: {}, //配置项
       searchOption: [], // 搜索的配置
-      boxType: "add", // 弹窗类型
       tableIndex: -1, // 当前处理行的索引
       DIC: {}, // 字典集合
+      functionName: "", // 当前模块的名字
     };
   },
   created() {
@@ -177,12 +178,19 @@ export default create({
     rowDel(row, index) {
       this.$emit("row-del", row, index);
     },
-    //查看
+    // 查看
     rowView(row, index) {
       this.tableForm = this.rowClone(row);
       this.$emit("input", this.tableForm);
       this.tableIndex = index;
       this.$refs.dialogForm.show("view");
+    },
+    // 编辑
+    rowEdit(row, index) {
+      this.tableForm = this.rowClone(row);
+      this.$emit("input", this.tableForm);
+      this.tableIndex = index;
+      this.$refs.dialogForm.show("edit", index);
     },
     //1.初始化列表数据
     dataInit() {
@@ -197,6 +205,7 @@ export default create({
       this.tableOption = this.deepClone(this.option);
       // 初始化搜索配置
       this.initSearchOption();
+      this.titleInit();
     },
     // 4.初始化搜索配置
     initSearchOption() {
@@ -205,6 +214,10 @@ export default create({
       );
       this.searchOption = option;
       console.log("搜索配置", this.searchOption);
+    },
+    // 初始化标题
+    titleInit(title = "") {
+      this.functionName = title || this.$route.meta.title;
     },
     // 添加
     rowAdd() {

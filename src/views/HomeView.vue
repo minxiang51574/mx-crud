@@ -40,7 +40,7 @@ export default {
       return {
         isShowmenu: true, // 操作栏配置-是否显示操作栏
         isViewBtn: true, // 操作栏配置-是否显示查看
-        isEditBtn: false, // 操作栏配置-是否显示编辑
+        isEditBtn: true, // 操作栏配置-是否显示编辑
         isDelBtn: true, // 操作栏配置-是否显示删除
         align: "center", // 表格列配置-对齐方式
         index: true, // 表格列配置-索引
@@ -56,6 +56,7 @@ export default {
             prop: "zdy",
             slot: true, // 表格列配置-自定义列
             viewDisplay: false, // 弹窗表单配置-查看是否显示
+            editDisplay: false, // 弹窗表单配置-编辑是否显示
           },
           {
             label: "多选框",
@@ -98,6 +99,7 @@ export default {
             label: "状态formatter",
             prop: "status",
             viewDisplay: false, // 弹窗表单配置-查看是否显示
+            editDisplay: false, // 弹窗表单配置-编辑是否显示
             formatter: (row) => {
               // 表格列配置-筛选
               const map = new Map([
@@ -112,12 +114,14 @@ export default {
             label: "列隐藏",
             prop: "lyc",
             viewDisplay: false, // 弹窗表单配置-查看是否显示
+            editDisplay: false, // 弹窗表单配置-编辑是否显示
             hide: true, // 表格列配置-列隐藏
           },
           {
             label: "日期2",
             prop: "date2",
             viewDisplay: false, // 弹窗表单配置-查看是否显示
+            editDisplay: false, // 弹窗表单配置-编辑是否显示
             align: "left", // 表格列配置-对齐方式
           },
           {

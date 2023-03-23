@@ -28,7 +28,18 @@
       </template>
       <template v-else>
         <el-button :size="$parent.controlSize" @click="closeDialog">取 消</el-button>
-        <el-button type="primary" :size="$parent.controlSize" @click="boxVisible = false"
+        <el-button
+          type="primary"
+          :size="$parent.controlSize"
+          v-if="boxType === 'edit'"
+          @click="rowUpdate"
+          >保 存</el-button
+        >
+        <el-button
+          type="primary"
+          :size="$parent.controlSize"
+          v-if="boxType === 'add'"
+          @click="rowSave"
           >保 存</el-button
         >
       </template>
@@ -92,10 +103,19 @@ export default create({
         ["edit", "编辑"],
         ["add", "新增"],
       ]);
-      this.title = boxTypeMap.get(this.boxType);
+      this.title = this.$parent.functionName + boxTypeMap.get(this.boxType);
+
       this.$nextTick(() => {
         this.boxVisible = true;
       });
+    },
+    // 更新
+    rowUpdate() {
+      console.log("更新");
+    },
+    // 保存
+    rowSave() {
+      console.log("保存");
     },
   },
 });

@@ -26,7 +26,7 @@ export const dateList = [
 export const initVal = ({ type, multiple, dataType, value }) => {
   if (
     (['select', 'tree'].includes(type) && multiple) ||
-    ['checkbox', 'cascader', 'dynamic', 'upload'].includes(type)
+    ['checkbox'].includes(type)
   ) {
     if (Array.isArray(value)) return value;
     else if (!validatenull(value)) {

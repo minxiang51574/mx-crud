@@ -95,24 +95,23 @@ export default create({
   methods: {
     // 查看
     rowView(row, index) {
-      console.log("row", row, index);
       if (this.tableOption.customView) {
         // 自定义查看
         this.$emit("custom-view", row, index);
       } else {
         // 默认查看
-        this.viewRow(row, index);
+        this.$emit("row-view", row, index);
       }
-    },
-    /**
-     * 默认查看
-     */
-    viewRow(row, index) {
-      this.$emit("row-view", row, index);
     },
     // 编辑
     rowEdit(row, index) {
-      this.$emit("rowEdit", row, index);
+      if (this.tableOption.customEdit) {
+        // 自定义编辑
+        this.$emit("custom-edit", row, index);
+      } else {
+        // 默认查看
+        this.$emit("row-edit", row, index);
+      }
     },
     // 删除
     rowDel(row, index) {
