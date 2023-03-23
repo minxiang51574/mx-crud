@@ -7,16 +7,31 @@
     append-to-body
     :close-on-press-escape="false"
     :close-on-click-modal="false"
-    width="900px"
+    width="940px"
     :visible.sync="boxVisible"
     @close="closeDialog"
   >
-    <span>这是一段信息</span>
-    <span slot="footer" class="dialog-footer">
-      <el-button :size="$parent.controlSize" @click="closeDialog">取 消</el-button>
-      <el-button type="primary" :size="$parent.controlSize" @click="dialogVisible = false"
-        >保 存</el-button
+    <el-scrollbar style="height: 100%">
+      <mx-form
+        v-model="tableForm"
+        v-if="boxVisible"
+        ref="tableForm"
+        :formOption="formOption"
       >
+      </mx-form>
+    </el-scrollbar>
+    <span slot="footer" class="dialog-footer">
+      <template v-if="boxType === 'view'">
+        <el-button type="primary" :size="$parent.controlSize" @click="boxVisible = false"
+          >确 定</el-button
+        >
+      </template>
+      <template v-else>
+        <el-button :size="$parent.controlSize" @click="closeDialog">取 消</el-button>
+        <el-button type="primary" :size="$parent.controlSize" @click="boxVisible = false"
+          >保 存</el-button
+        >
+      </template>
     </span>
   </el-dialog>
 </template>
@@ -25,18 +40,48 @@ import create from "../../core/create";
 import config from "./config";
 export default create({
   name: "crud",
+  props: {
+    value: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
+  watch: {
+    value: {
+      handler() {
+        this.formVal();
+      },
+      deep: true,
+    },
+  },
   data() {
     return {
       config,
       boxType: "", //弹窗类型
       boxVisible: false,
       title: "",
+      tableForm: {},
     };
+  },
+  computed: {
+    formOption() {
+      const option = this.deepClone(this.$parent.tableOption);
+      option.boxType = this.boxType;
+      return option;
+    },
   },
   methods: {
     closeDialog() {
       this.tableForm = {};
       this.boxVisible = false;
+    },
+    formVal() {
+      Object.keys(this.value).forEach((ele) => {
+        this.tableForm[ele] = this.value[ele];
+      });
+      this.$emit("input", this.tableForm);
     },
     // 显示表单
     show(type, index = -1) {

@@ -1,7 +1,7 @@
 /*
  * @Author: Mx
  * @Date: 2023-03-16 09:46:12
- * @Description: 
+ * @Description: create方法
  */
 import bem from '../utils/bem';
 import { COMPONENTNAME } from './constant';

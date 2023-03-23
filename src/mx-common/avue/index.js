@@ -4,7 +4,7 @@
  * @Description: 
  */
 import components from "./element-ui"
-import { deepClone, vaildData,validatenull } from "./utils";
+import { deepClone, vaildData,validatenull,setPx } from "./utils";
 
 
 const install = function(Vue){
@@ -15,6 +15,7 @@ const install = function(Vue){
     Vue.prototype.deepClone = deepClone;
     Vue.prototype.vaildData = vaildData;   
     Vue.prototype.validatenull = validatenull;
+    Vue.prototype.setPx = setPx;
 }
 
 export default {

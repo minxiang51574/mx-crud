@@ -208,9 +208,6 @@ export default function () {
           dataType: this.dataType,
           value: this.value
         });
-        // console.log('-----------------------------');
-        // console.log(this.type, this.value)
-        // console.log('this.text', this.value)
       }
     }
   };

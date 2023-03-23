@@ -55,38 +55,49 @@ export default {
             label: "自定义列",
             prop: "zdy",
             slot: true, // 表格列配置-自定义列
+            viewDisplay: false, // 弹窗表单配置-查看是否显示
           },
           {
             label: "多选框",
-            prop: "status",
+            prop: "selectType",
             // multiple: true,
             search: true,
             searchType: "select", // 搜索-定义类型
             dicData: [
               {
                 label: "紧急公告",
-                value: "1",
+                value: 1,
               },
               {
                 label: "上线公告",
-                value: "2",
+                value: 2,
               },
               {
                 label: "业务公告",
-                value: "3",
+                value: 3,
               },
             ],
+            formatter: (row) => {
+              // 表格列配置-筛选
+              const map = new Map([
+                [0, `紧急公告`],
+                [1, `上线公告`],
+                [2, `业务公告`],
+              ]);
+              return map.get(row.selectType);
+            },
           },
           {
             label: "时间",
             prop: "date",
             hide: true,
             search: true,
-            searchType: "daterange", // 搜索-定义类型
+            searchType: "date", // 搜索-定义类型
           },
           {
-            label: "状态",
+            label: "状态formatter",
             prop: "status",
+            viewDisplay: false, // 弹窗表单配置-查看是否显示
             formatter: (row) => {
               // 表格列配置-筛选
               const map = new Map([
@@ -100,11 +111,13 @@ export default {
           {
             label: "列隐藏",
             prop: "lyc",
+            viewDisplay: false, // 弹窗表单配置-查看是否显示
             hide: true, // 表格列配置-列隐藏
           },
           {
             label: "日期2",
-            prop: "date",
+            prop: "date2",
+            viewDisplay: false, // 弹窗表单配置-查看是否显示
             align: "left", // 表格列配置-对齐方式
           },
           {
@@ -128,24 +141,28 @@ export default {
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄",
           status: 0,
+          selectType: 1,
         },
         {
           date: "2016-05-04",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1517 弄",
           status: 1,
+          selectType: 2,
         },
         {
           date: "2016-05-01",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1519 弄",
           status: 1,
+          selectType: 3,
         },
         {
           date: "2016-05-03",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄",
           status: 2,
+          selectType: 2,
         },
       ];
       this.page.total = this.tableData.length;

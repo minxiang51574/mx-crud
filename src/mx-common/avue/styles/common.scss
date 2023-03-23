@@ -16,3 +16,8 @@
     flex-wrap: wrap;
     height: auto;
 }
+.mx-form{
+  .el-select,.el-date-editor{
+      width: 100% !important;
+  }
+}

@@ -17,9 +17,10 @@ export default {
   isViewBtn: true, // 是否显示查看
   isEditBtn: true, // 是否显示编辑
   isDelBtn: true, // 是否显示删除
-  labelPosition: "left", // 表单label的位置 
-  // 图标
+  labelPosition: "right", // 表单label的位置 
+  labelWidth: 150, // 表单label的宽度
 
+  // 图标
   addBtnIcon: 'iconfont el-icon-circle-plus-outline',
   searchBtnIcon: 'iconfont el-icon-search',
 
@@ -36,27 +37,7 @@ export default {
   filterBtnIcon: 'el-icon-tickets',
   refreshBtnIcon: 'el-icon-refresh',
   searchBoxBtnIcon: 'iconfont iconchaxun3',
-  //   查看 iconchakan1
-  // 编辑 iconbianji1
-  // 删除 iconshanchu2
-  // 重置密码 iconzhongzhimima2
-  // 账号解锁 iconzhanghaojiesuo
-  // 复制 iconfuzhi
-  // 收件 iconshoujian
-  // 派件 iconpaijian
-  // 确认入库 iconquerenruku
-  // 下线 iconxiaxian1
-  // 撤回 iconchehui
-  // 预警设置 iconyujingshezhi
-  // 查询 iconchaxun3
-  // 增加 iconzengjia
-  // 作废 iconzuofei1
-  // 审核 iconshenhe1
-  // 驳回 iconbohui2
-  // 问题件回复 iconwentijianhuifu1
-  // 回复明细 iconhuifumingxi
-  // 完结 iconwanjie
-  // 显隐
+
   viewBtn: true,
   editBtn: true,
   cancelBtn: true,
@@ -81,7 +62,6 @@ export default {
   dialogHeight: 400,
   dialogWidth: '700px',
   formFullscreen: false,
-  customClass: '',
   pageBackground: true,
   page: true,
   menu: true,
@@ -92,6 +72,5 @@ export default {
   dateDefault: true,
   // 搜索参数
   searchMultiple: ['checkbox', 'tree', 'select'],
-  labelWidth: 200, // 表单label的宽度
   border: true // 列表是否有border
 };

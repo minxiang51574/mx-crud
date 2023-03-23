@@ -124,6 +124,7 @@ export default create({
       immediate: true,
     },
     value() {
+      console.log("value");
       this.initVal();
       this.init();
     },

@@ -71,25 +71,6 @@ export default create({
       type: Boolean,
       default: false,
     },
-    isSearch: {
-      type: Boolean,
-      default: false,
-    },
-    useAlone: {
-      type: Boolean,
-      default: false,
-    },
-    reserveKeyword: {
-      type: Boolean,
-      default: true,
-    },
-    isLoadMore: {
-      type: Boolean,
-      default: false,
-    },
-    dicQueryFormat: {
-      type: Function,
-    },
     dicData: {
       type: Array,
     },

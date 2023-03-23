@@ -12,7 +12,7 @@
           type="primary"
           @click="rowAdd"
           :icon="config.addBtnIcon"
-          :size="isMediumSize"
+          :size="controlSize"
           :disabled="tableOption.addDisabled"
           v-if="vaildData(tableOption.addBtn, true)"
           >新增</el-button
@@ -21,7 +21,7 @@
           type="primary"
           @click="searchChange"
           :icon="config.searchBtnIcon"
-          :size="isMediumSize"
+          :size="controlSize"
           :loading="tableLoading"
           class="btn-query"
           v-if="vaildData(tableOption.search, true)"
@@ -31,7 +31,7 @@
           type="info"
           @click="exportExcel"
           icon="iconfont icondaochu1"
-          :size="isMediumSize"
+          :size="controlSize"
           :loading="exportLoading"
           v-if="vaildData(tableOption.exportBtn, false)"
           >导出</el-button
@@ -157,11 +157,8 @@ export default create({
       findProp(this.columnOption);
       return result;
     },
-    isMediumSize() {
-      return this.controlSize === "medium" ? "small" : this.controlSize;
-    },
     controlSize() {
-      return this.tableOption.size || "medium";
+      return this.tableOption.size || "small";
     },
   },
   mounted() {},
@@ -198,7 +195,6 @@ export default create({
     //3.获取配置项
     configInit() {
       this.tableOption = this.deepClone(this.option);
-
       // 初始化搜索配置
       this.initSearchOption();
     },
