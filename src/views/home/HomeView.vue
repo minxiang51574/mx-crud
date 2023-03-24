@@ -6,9 +6,10 @@
 <template>
   <div class="home">
     <mx-crud
-      :data="tableData"
+      :data="tableList"
       :option="listOption"
-      :page.sync="page"
+      :page="page"
+      :table-loading="loading"
       @size-change="sizeChange"
       @current-change="currentChange"
       @search-change="searchChange"
@@ -31,12 +32,16 @@
 
 <script>
 import mixin from "@/mx-common/mixins/mixin";
+import { queryHomePageData } from "@/api";
 export default {
   name: "HomeView",
   mixins: [mixin],
   data() {
     return {
-      tableData: [],
+      COM_HTTP: {
+        //当前页面请求
+        reqList: queryHomePageData,
+      },
     };
   },
   computed: {
@@ -93,9 +98,9 @@ export default {
             formatter: (row) => {
               // 表格列配置-筛选
               const map = new Map([
-                [0, `紧急公告`],
-                [1, `上线公告`],
-                [2, `业务公告`],
+                [1, `紧急公告`],
+                [2, `上线公告`],
+                [3, `业务公告`],
               ]);
               return map.get(row.selectType);
             },
@@ -103,7 +108,6 @@ export default {
           {
             label: "时间",
             prop: "date",
-            hide: true,
             search: true,
             type: "date", // 搜索-定义类型
             format: "yyyy-MM-dd",
@@ -118,9 +122,9 @@ export default {
             formatter: (row) => {
               // 表格列配置-筛选
               const map = new Map([
-                [0, `<i class="class1"></i> 未开始`],
-                [1, `<i class="class2"></i> 成功`],
-                [2, `<i class="class3"></i> 已完成`],
+                [1, `<i class="class1"></i> 未开始`],
+                [2, `<i class="class2"></i> 成功`],
+                [3, `<i class="class3"></i> 已完成`],
               ]);
               return map.get(row.status);
             },
@@ -136,6 +140,7 @@ export default {
           {
             label: "日期2",
             prop: "date2",
+            hide: true,
             viewDisplay: false, // 弹窗表单配置-查看是否显示
             editDisplay: false, // 弹窗表单配置-编辑是否显示
             addDisplay: false, // 弹窗表单配置-新增是否显示
@@ -151,43 +156,7 @@ export default {
       };
     },
   },
-  created() {
-    this.getData();
-  },
   methods: {
-    getData() {
-      this.tableData = [
-        {
-          date: "2016-05-02 00:00:00",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-          status: 0,
-          selectType: 1,
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-          status: 1,
-          selectType: 2,
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-          status: 1,
-          selectType: 3,
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-          status: 2,
-          selectType: 2,
-        },
-      ];
-      this.page.total = this.tableData.length;
-    },
     /**
      * 自定义新增
      */

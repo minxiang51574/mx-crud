@@ -1,6 +1,6 @@
 /*
  * @Author: Mx
- * @Date: 2021-12-17 14:42:02
+ * @Date: 2022-12-17 14:42:02
  * @Description: crud配置文件
  */
 export default {

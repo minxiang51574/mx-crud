@@ -85,7 +85,7 @@
       </Column>
     </el-table>
     <!-- 分页 -->
-    <Page></Page>
+    <Page ref="tablePage"></Page>
 
     <!-- 表单 -->
     <Dialog-form v-model="tableForm" ref="dialogForm" :class="dialogClass"> </Dialog-form>
@@ -135,28 +135,6 @@ export default create({
     },
   },
   components: { Column, Page, HeaderSearch, DialogForm },
-  data() {
-    return {
-      config,
-      tableColumn: [], // 表格列
-      list: [], // 表格展示的数据
-      tableForm: {}, // 弹窗表单
-      searchForm: {}, // 搜索表单
-      tableOption: {}, //配置项
-      searchOption: [], // 搜索的配置
-      tableIndex: -1, // 当前处理行的索引
-      DIC: {}, // 字典集合
-      functionName: "", // 当前模块的名字
-    };
-  },
-  created() {
-    //1.初始化列表数据
-    this.dataInit();
-    //2.初始化列
-    this.initTableColumn();
-    //3.获取配置项
-    this.configInit();
-  },
   computed: {
     // 列的配置集合
     columnOption() {
@@ -185,7 +163,42 @@ export default create({
       return this.tableOption.size || "small";
     },
   },
-  mounted() {},
+  watch: {
+    data() {
+      this.dataInit();
+    },
+    // 分页参数配置项
+    page: {
+      handler() {
+        this.$refs.tablePage.pageInit();
+      },
+      deep: true,
+    },
+  },
+  data() {
+    return {
+      config,
+      tableColumn: [], // 表格列
+      list: [], // 表格展示的数据
+      tableForm: {}, // 弹窗表单
+      searchForm: {}, // 搜索表单
+      tableOption: {}, //配置项
+      searchOption: [], // 搜索的配置
+      tableIndex: -1, // 当前处理行的索引
+      DIC: {}, // 字典集合
+      functionName: "", // 当前模块的名字
+    };
+  },
+
+  created() {
+    //1.初始化列表数据
+    this.dataInit();
+    //2.初始化列
+    this.initTableColumn();
+    //3.获取配置项
+    this.configInit();
+  },
+
   methods: {
     // 对象克隆
     rowClone(row) {

@@ -19,9 +19,9 @@
   </div>
 </template>
 <script>
-import create from '../../core/create';
+import create from "../../core/create";
 export default create({
-  name: 'page',
+  name: "page",
   data() {
     return {
       defaultPage: {
@@ -43,20 +43,18 @@ export default create({
       this.defaultPage.total = this.$parent.page.total || 0;
       this.defaultPage.currentPage = this.$parent.page.current || 1;
       this.defaultPage.pageSize = this.$parent.page.size || 10;
-      this.defaultPage.pageSizes = this.$parent.page.sizes || [
-        10, 20, 30, 40, 50, 100,
-      ];
+      this.defaultPage.pageSizes = this.$parent.page.sizes || [10, 20, 30, 40, 50, 100];
       this.defaultPage.background = this.$parent.page.background || true;
     },
     // pageSize 改变
     sizeChange(val) {
       this.defaultPage.currentPage = 1;
       this.defaultPage.pageSize = val;
-      this.$parent.$emit('size-change', val);
+      this.$parent.$emit("size-change", val);
     },
     // currentPage 改变
     currentChange(val) {
-      this.$parent.$emit('current-change', val);
+      this.$parent.$emit("current-change", val);
     },
   },
 });

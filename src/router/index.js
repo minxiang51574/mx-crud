@@ -1,6 +1,11 @@
+/*
+ * @Author: Mx
+ * @Date: 2023-03-23 17:44:29
+ * @Description: 
+ */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/home/HomeView.vue'
 
 Vue.use(VueRouter)
 

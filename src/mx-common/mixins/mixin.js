@@ -1,18 +1,24 @@
 /*
  * @Author: Mx
  * @Date: 2023-03-22 10:09:58
- * @Description: 
+ * @Description: mixins
  */
+import { RESPONSE_CODE } from '../avue/core/constant'
 export default {
   data() {
     return {
       COM_HTTP: {},// 当前默认请求
+      tableList: [], // 表格列表数据
+      loading: false, // 加载控制
       page: {
         current: 1,
-        size: 20,
+        size: 10,
         total: 0,
       },
     };
+  },
+  mounted() {
+      this.searchFun()
   },
   methods: {
     // 选择分页条数
@@ -30,8 +36,9 @@ export default {
     searchChange(params) {
       this.searchFun(params, 1);
     },
-    // 查询方法
+    /** 查询方法 */
     async searchFun(params, currentPage) {
+      console.log('searchFun');
       this.loading = true;
       // 传入参数有current
       if (currentPage) {
@@ -39,8 +46,19 @@ export default {
       }
       const filnalParams = this.searchFunParamsHandle(params);
       console.log('最后的请求参数filnalParams:', filnalParams);
+      const { data: res } = await this.COM_HTTP.reqList(filnalParams)
+       // 没做axios数据拦截 多一层结构
+      console.log("res", res);
+      if (res.code === RESPONSE_CODE.SUCCESS) {
+          this.tableList = res.data.results || []
+          this.page.total = res.data.total || 0
+          this.page.current = res.data.current || 1
+      } else {
+        this.$message.error(res.msg)
+      }
+      this.loading = false
     },
-    // 列表查询参数处理
+    /** 列表查询参数处理 */
     searchFunParamsHandle(params) {
       let filnalParams = Object.assign(
         { page: this.page.current, size: this.page.size },
