@@ -54,10 +54,6 @@ export const formInitVal = (list = []) => {
   list.forEach(ele => {
     if (
       ele.type === 'checkbox' ||
-      ele.type === 'cascader' ||
-      ele.type === 'dynamic' ||
-      ele.type === 'dates' ||
-      (ele.type === 'upload' && ele.listType !== 'picture-img') ||
       ele.multiple ||
       ele.range ||
       ele.dataType === 'array'

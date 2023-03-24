@@ -180,8 +180,8 @@ export const getComponent = (type, component) => {
  * 获取动态组件ttpe
  */
 export const getType = (column) => {
-  const searchType = column.searchType;
-  return searchType;
+  const type = column.type;
+  return type;
 };
 
 /**

@@ -1,7 +1,7 @@
 <!--
  * @Author: Mx
  * @Date: 2023-03-22 10:09:58
- * @Description: 
+ * @Description: Crud
 -->
 <template>
   <div :class="b()">
@@ -28,14 +28,31 @@
           >查询</el-button
         >
         <el-button
-          type="info"
+          type="primary"
+          plain
           @click="exportExcel"
-          icon="iconfont icondaochu1"
           :size="controlSize"
           :loading="exportLoading"
           v-if="vaildData(tableOption.exportBtn, false)"
           >导出</el-button
         >
+        <el-button
+          type="primary"
+          plain
+          @click="exportRecord"
+          :size="controlSize"
+          :loading="exportLoading"
+          v-if="vaildData(tableOption.exportRecordBtn, false)"
+          >导出记录</el-button
+        >
+        <el-button
+          type="info"
+          @click="searchReset"
+          :size="controlSize"
+          v-if="vaildData(tableOption.search, true)"
+        >
+          重置
+        </el-button>
       </div>
       <div :class="b('right')"></div>
     </div>
@@ -52,7 +69,9 @@
         :tableOption="tableOption"
         @row-del="rowDel"
         @row-view="rowView"
+        @custom-view="customView"
         @row-edit="rowEdit"
+        @custom-edit="customEdit"
       >
         <!-- 每列的自定义slot -->
         <template v-for="item in propOption" slot-scope="scope" :slot="item.prop">
@@ -109,6 +128,10 @@ export default create({
     },
     dialogClass: {
       type: String,
+    },
+    exportLoading: {
+      type: Boolean,
+      default: false,
     },
   },
   components: { Column, Page, HeaderSearch, DialogForm },
@@ -185,12 +208,30 @@ export default create({
       this.tableIndex = index;
       this.$refs.dialogForm.show("view");
     },
+    // 自定义查看
+    customView(row, index) {
+      this.$emit("custom-view", row, index);
+    },
     // 编辑
     rowEdit(row, index) {
       this.tableForm = this.rowClone(row);
       this.$emit("input", this.tableForm);
       this.tableIndex = index;
       this.$refs.dialogForm.show("edit", index);
+    },
+    // 自定义编辑
+    customEdit(row, index) {
+      this.$emit("custom-edit", row, index);
+    },
+    // 新增
+    rowAdd() {
+      if (this.tableOption.customAdd) {
+        // 自定义新增
+        this.$emit("custom-add");
+      } else {
+        // 默认新增
+        this.$refs.dialogForm.show("add");
+      }
     },
     //1.初始化列表数据
     dataInit() {
@@ -219,17 +260,21 @@ export default create({
     titleInit(title = "") {
       this.functionName = title || this.$route.meta.title;
     },
-    // 添加
-    rowAdd() {
-      if (!this.tableOption.customAdd) {
-        this.$refs.dialogForm.show("add");
-      } else {
-        this.$emit("custom-add");
-      }
-    },
     // 搜索
     searchChange() {
       this.$refs.headerSearch.searchChange();
+    },
+    // 重置搜索条件
+    searchReset() {
+      this.$refs.headerSearch.searchReset();
+    },
+    // 导出excel
+    exportExcel() {
+      console.log("exportExcel");
+    },
+    // 导出记录
+    exportRecord() {
+      console.log("exportRecord");
     },
   },
 });

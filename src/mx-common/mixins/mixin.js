@@ -73,6 +73,10 @@ export default {
         message: '删除成功!'
       });
     },
+    // 搜索清空
+    resetList() {
+      console.log('resetList');
+    },
 
   },
 };

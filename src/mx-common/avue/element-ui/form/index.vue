@@ -1,7 +1,7 @@
 <!--
  * @Author: Mx
  * @Date: 2023-03-23 10:39:08
- * @Description: 
+ * @Description: Form
 -->
 <template>
   <div :class="b()" :style="{ width: '100%' }">
@@ -29,12 +29,12 @@
                 )
               "
               :label-width="getLabelWidth(column)"
-              :label="column.label"
+              :label="column.labelAlias || column.label"
             >
               <component
                 v-model="form[column.prop]"
                 :ref="column.prop"
-                :is="getComponent(column.searchType)"
+                :is="getComponent(column.type)"
                 :clearable="column.searchClearable"
                 :defaultTime="
                   column.searchDefaultTime ||
@@ -48,7 +48,7 @@
                 :placeholder="column.searchPlaceholder || ''"
                 :prop="column.prop"
                 :size="$parent.controlSize"
-                :type="column.searchType"
+                :type="column.type"
                 :value-format="column.valueFormat"
                 :tpyeformat="column.tpyeformat"
                 :dicData="column.dicData"
@@ -119,7 +119,7 @@ export default create({
     getComponent,
     /** 初始化表单 */
     dataformat() {
-      this.form = this.deepClone(formInitVal(this.formOption.column).searchForm);
+      this.form = this.deepClone(formInitVal(this.formOption.column).tableForm);
       this.formVal();
     },
     /** 表单数据处理 */
@@ -127,6 +127,7 @@ export default create({
       Object.keys(this.value).forEach((ele) => {
         this.$set(this.form, ele, this.value[ele]);
       });
+      console.log("this.form", this.form);
       this.$emit("input", this.form);
     },
     /** 验证表单是否禁止 */

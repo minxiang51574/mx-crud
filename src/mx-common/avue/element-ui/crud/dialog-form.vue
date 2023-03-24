@@ -2,7 +2,7 @@
   <el-dialog
     lock-scroll
     :class="b('dialog')"
-    :title="title"
+    :title="titleAlias || title"
     :custom-class="$parent.tableOption.customDialogClass"
     append-to-body
     :close-on-press-escape="false"
@@ -73,6 +73,7 @@ export default create({
       boxType: "", //弹窗类型
       boxVisible: false,
       title: "",
+      titleAlias: "", // 自定义title
       tableForm: {},
     };
   },
@@ -98,24 +99,34 @@ export default create({
     show(type, index = -1) {
       this.index = index;
       this.boxType = type;
+      this.handlerTitle();
+      this.$nextTick(() => {
+        this.boxVisible = true;
+      });
+    },
+    /** 标题处理 */
+    handlerTitle() {
       const boxTypeMap = new Map([
         ["view", "查看"],
         ["edit", "编辑"],
         ["add", "新增"],
       ]);
+      if (this.boxType === "view") {
+        this.titleAlias = this.$parent.tableOption.titleAliasView;
+      } else if (this.boxType === "edit") {
+        this.titleAlias = this.$parent.tableOption.titleAliasEdit;
+      } else if (this.boxType === "add") {
+        this.titleAlias = this.$parent.tableOption.titleAliasAdd;
+      }
       this.title = this.$parent.functionName + boxTypeMap.get(this.boxType);
-
-      this.$nextTick(() => {
-        this.boxVisible = true;
-      });
     },
     // 更新
     rowUpdate() {
-      console.log("更新");
+      console.log("更新", this.tableForm);
     },
     // 保存
     rowSave() {
-      console.log("保存");
+      console.log("保存", this.tableForm);
     },
   },
 });

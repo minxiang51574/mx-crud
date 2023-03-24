@@ -13,6 +13,10 @@
       @current-change="currentChange"
       @search-change="searchChange"
       @row-del="rowDel"
+      @custom-add="rowCustomAdd"
+      @custom-view="rowCustomView"
+      @custom-edit="rowCustomEdit"
+      @search-reset="resetList"
     >
       <template v-slot:zdy="{ row }">
         {{ row }}
@@ -42,11 +46,18 @@ export default {
         isViewBtn: true, // 操作栏配置-是否显示查看
         isEditBtn: true, // 操作栏配置-是否显示编辑
         isDelBtn: true, // 操作栏配置-是否显示删除
+        exportBtn: true, // 操作栏配置-导出
+        exportRecordBtn: true, // 操作栏配置-导出记录
         align: "center", // 表格列配置-对齐方式
         index: true, // 表格列配置-索引
+        customAdd: true, // 自定义新增
+        customView: true, // 自定义查看
+        customEdit: false, // 自定义编辑
+        titleAliasEdit: "自定义title",
         column: [
           {
             label: "姓名1",
+            labelAlias: "自定义label别名", // 弹窗表单配置 - 自定义label别名
             prop: "name",
             search: true, // 表格列配置-是否搜索
             width: 200, // 表格列配置-宽度
@@ -57,13 +68,14 @@ export default {
             slot: true, // 表格列配置-自定义列
             viewDisplay: false, // 弹窗表单配置-查看是否显示
             editDisplay: false, // 弹窗表单配置-编辑是否显示
+            addDisplay: false, // 弹窗表单配置-新增是否显示
           },
           {
             label: "多选框",
             prop: "selectType",
             // multiple: true,
             search: true,
-            searchType: "select", // 搜索-定义类型
+            type: "select", // 搜索-定义类型
             dicData: [
               {
                 label: "紧急公告",
@@ -93,13 +105,16 @@ export default {
             prop: "date",
             hide: true,
             search: true,
-            searchType: "date", // 搜索-定义类型
+            type: "date", // 搜索-定义类型
+            format: "yyyy-MM-dd",
+            valueFormat: "yyyy-MM-dd",
           },
           {
             label: "状态formatter",
             prop: "status",
             viewDisplay: false, // 弹窗表单配置-查看是否显示
             editDisplay: false, // 弹窗表单配置-编辑是否显示
+            addDisplay: false, // 弹窗表单配置-新增是否显示
             formatter: (row) => {
               // 表格列配置-筛选
               const map = new Map([
@@ -115,6 +130,7 @@ export default {
             prop: "lyc",
             viewDisplay: false, // 弹窗表单配置-查看是否显示
             editDisplay: false, // 弹窗表单配置-编辑是否显示
+            addDisplay: false, // 弹窗表单配置-新增是否显示
             hide: true, // 表格列配置-列隐藏
           },
           {
@@ -122,6 +138,7 @@ export default {
             prop: "date2",
             viewDisplay: false, // 弹窗表单配置-查看是否显示
             editDisplay: false, // 弹窗表单配置-编辑是否显示
+            addDisplay: false, // 弹窗表单配置-新增是否显示
             align: "left", // 表格列配置-对齐方式
           },
           {
@@ -141,7 +158,7 @@ export default {
     getData() {
       this.tableData = [
         {
-          date: "2016-05-02",
+          date: "2016-05-02 00:00:00",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄",
           status: 0,
@@ -170,6 +187,24 @@ export default {
         },
       ];
       this.page.total = this.tableData.length;
+    },
+    /**
+     * 自定义新增
+     */
+    rowCustomAdd() {
+      console.log("自定义新增");
+    },
+    /**
+     * 自定义查看
+     */
+    rowCustomView() {
+      console.log("自定义查看");
+    },
+    /**
+     * 自定义编辑
+     */
+    rowCustomEdit() {
+      console.log("自定义编辑");
     },
   },
 };

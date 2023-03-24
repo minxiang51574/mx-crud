@@ -26,7 +26,7 @@
           <component
             v-model="searchForm[column.prop]"
             :ref="column.prop"
-            :is="getSearchType(column.searchType)"
+            :is="getSearchType(column.type)"
             :clearable="column.searchClearable"
             :defaultTime="
               column.searchDefaultTime || (column.more ? ['00:00:00', '23:59:59'] : '')
@@ -37,7 +37,7 @@
             :editable="column.editable"
             :format="column.format"
             :multiple="
-              config.searchMultiple.includes(column.searchType) &&
+              config.searchMultiple.includes(column.type) &&
               vaildData(column.searchMmultiple, false)
             "
             :placeholder="column.searchPlaceholder || ''"
@@ -83,8 +83,12 @@ export default create({
     },
     // 搜索回调
     searchChange() {
-      console.log(this.$parent);
       this.$parent.$emit("search-change", this.searchForm);
+    },
+    // 搜索清空
+    searchReset() {
+      this.$refs["searchForm"].resetFields();
+      this.$parent.$emit("search-reset");
     },
     // 过滤searchForm默认
     dataformat() {
