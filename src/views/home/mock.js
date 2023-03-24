@@ -61,7 +61,7 @@ Mock.mock(new RegExp('/api/homePageData'),(params) => {
     const ps = size ;
         return successResponseWrap({
         total:15,
-        current:1,
+        current: page || 1,
         results:data.results.slice((p - 1) * ps, p * ps)
     });
 })

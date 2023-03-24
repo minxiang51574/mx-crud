@@ -29,6 +29,7 @@ export default {
     },
     // 跳转页码
     currentChange(val) {
+      console.log('跳转页码');
       this.page.current = val;
       this.searchFun();
     },
@@ -37,12 +38,12 @@ export default {
       this.searchFun(params, 1);
     },
     /** 查询方法 */
-    async searchFun(params, currentPage) {
+    async searchFun(params, current) {
       console.log('searchFun');
       this.loading = true;
       // 传入参数有current
-      if (currentPage) {
-        this.page.currentPage = currentPage;
+      if (current) {
+        this.page.current = current;
       }
       const filnalParams = this.searchFunParamsHandle(params);
       console.log('最后的请求参数filnalParams:', filnalParams);
