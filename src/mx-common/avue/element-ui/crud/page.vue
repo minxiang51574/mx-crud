@@ -9,7 +9,7 @@
       element-loading-spinner="el-icon-loading"
       element-loading-text="页码数据加载中..."
       :current-page.sync="defaultPage.current"
-      :page-size="defaultPage.size"
+      :page-size="defaultPage.pageSize"
       :page-sizes="defaultPage.sizes"
       @size-change="sizeChange"
       @current-change="currentChange"
@@ -19,15 +19,15 @@
   </div>
 </template>
 <script>
-import create from "../../core/create";
+import create from '../../core/create';
 export default create({
-  name: "page",
+  name: 'page',
   data() {
     return {
       defaultPage: {
         total: 0, // 总页数
-        current: 1, // 当前页数
-        size: 10, // 每页显示多少条
+        currentPage: 1, // 当前页数
+        pageSize: 10, // 每页显示多少条
         sizes: [10, 20, 30, 40, 50, 100],
         background: true, // 背景颜色
       },
@@ -41,20 +41,22 @@ export default create({
     // 初始化
     pageInit() {
       this.defaultPage.total = this.$parent.page.total || 0;
-      this.defaultPage.current = this.$parent.page.current || 1;
-      this.defaultPage.size = this.$parent.page.size || 10;
-      this.defaultPage.sizes = this.$parent.page.sizes || [10, 20, 30, 40, 50, 100];
+      this.defaultPage.currentPage = this.$parent.page.current || 1;
+      this.defaultPage.pageSize = this.$parent.page.pageSize || 10;
+      this.defaultPage.sizes = this.$parent.page.sizes || [
+        10, 20, 30, 40, 50, 100,
+      ];
       this.defaultPage.background = this.$parent.page.background || true;
     },
     // 选择分页条数
     sizeChange(val) {
-      this.defaultPage.current = 1;
-      this.defaultPage.size = val;
-      this.$parent.$emit("size-change", val);
+      this.defaultPage.currentPage = 1;
+      this.defaultPage.pageSize = val;
+      this.$parent.$emit('size-change', val);
     },
     // 跳转页码
     currentChange(val) {
-      this.$parent.$emit("current-change", val);
+      this.$parent.$emit('current-change', val);
     },
   },
 });
