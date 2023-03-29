@@ -69,9 +69,8 @@ export default {
     },
     // 删除 - 提示弹窗
     rowDel(row, index) {
-      console.log(row, index);
       const delTipMsg =
-        this.customDelMsg || this.delTipMsg || '确定删除该条数据';
+        this.customDelMsg || this.delTipMsg || '确定删除该条数据?';
       this.$confirm(delTipMsg, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -84,15 +83,49 @@ export default {
         })
         .catch(() => {});
     },
+    /**
+     * 增加方法
+     * @param {*} item  新增数据
+     * @param {*} doneCallback  执行完成回调
+     */
+    async addFun(item, doneCallback){
+      const { data: res } = await this.COM_HTTP.reqAdd(item)
+      // 没做axios数据拦截 多一层结构
+        if (res.code === RESPONSE_CODE.SUCCESS) {
+            this.$message.success('新增成功')
+            this.searchFun()
+            doneCallback()
+        } else {
+          this.$message.error(res.msg);
+        }
+    },
+    /**
+     * 编辑更新方法
+     * @param {*} item  新增数据
+     * @param {*} doneCallback  执行完成回调
+     */
+    async updateFun(item, doneCallback){
+      const { data: res } = await this.COM_HTTP.reqUpdate(item)
+      // 没做axios数据拦截 多一层结构
+        if (res.code === RESPONSE_CODE.SUCCESS) {
+            this.$message.success('新增成功')
+            this.searchFun()
+            doneCallback()
+        } else {
+          this.$message.error(res.msg);
+        }
+    },
     // 删除方法
-    async deleteFun(item, index) {
+    async deleteFun(item) {
       // 调接口
-      console.log('item, index', item, index);
-      // const res = await this.COM_HTTP.reqDel(item)
-      this.$message({
-        type: 'success',
-        message: '删除成功!',
-      });
+      const { data: res } = await this.COM_HTTP.reqDel(item)
+       // 没做axios数据拦截 多一层结构
+      if (res.code === RESPONSE_CODE.SUCCESS) {
+        this.$message.success('删除成功')
+      } else {
+        this.$message.error(res.msg);
+      }
+   
     },
     // 搜索清空
     resetList() {

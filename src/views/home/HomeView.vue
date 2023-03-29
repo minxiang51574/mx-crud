@@ -13,6 +13,8 @@
       @size-change="sizeChange"
       @current-change="currentChange"
       @search-change="searchChange"
+      @row-save="addFun"
+      @row-update="updateFun"
       @row-del="rowDel"
       @custom-add="rowCustomAdd"
       @custom-view="rowCustomView"
@@ -32,7 +34,12 @@
 
 <script>
 import mixin from "@/mx-common/mixins/mixin";
-import { queryHomePageData } from "@/api";
+import {
+  queryHomePageData,
+  deleteHomePageData,
+  addHomePageData,
+  updateHomePageData,
+} from "@/api";
 export default {
   name: "HomeView",
   mixins: [mixin],
@@ -40,7 +47,10 @@ export default {
     return {
       COM_HTTP: {
         //当前页面请求
-        reqList: queryHomePageData,
+        reqList: queryHomePageData, // 列表查询
+        reqDel: deleteHomePageData, //删除
+        reqAdd: addHomePageData, //新增
+        reqUpdate: updateHomePageData, //编辑
       },
     };
   },
@@ -55,7 +65,7 @@ export default {
         exportRecordBtn: true, // 操作栏配置-导出记录
         align: "center", // 表格列配置-对齐方式
         index: true, // 表格列配置-索引
-        customAdd: true, // 自定义新增
+        customAdd: false, // 自定义新增
         customView: true, // 自定义查看
         customEdit: false, // 自定义编辑
         titleAliasEdit: "自定义title",
@@ -66,6 +76,11 @@ export default {
             prop: "name",
             search: true, // 表格列配置-是否搜索
             width: 200, // 表格列配置-宽度
+            rules: {
+              required: true,
+              message: "请输入",
+              trigger: ["blur", "change"],
+            },
           },
           {
             label: "自定义列",
@@ -81,6 +96,11 @@ export default {
             // multiple: true,
             search: true,
             type: "select", // 搜索-定义类型
+            rules: {
+              required: true,
+              message: "请选择",
+              trigger: ["blur", "change"],
+            },
             dicData: [
               {
                 label: "紧急公告",
@@ -112,6 +132,11 @@ export default {
             type: "date", // 搜索-定义类型
             format: "yyyy-MM-dd",
             valueFormat: "yyyy-MM-dd",
+            rules: {
+              required: true,
+              message: "请选择",
+              trigger: ["blur", "change"],
+            },
           },
           {
             label: "状态formatter",
@@ -151,6 +176,11 @@ export default {
             prop: "address",
             overHidden: true, // 表格列配置-内容超出隐藏
             width: 100, // 表格列配置-宽度
+            rules: {
+              required: true,
+              message: "请输入",
+              trigger: ["blur", "change"],
+            },
           },
         ],
       };

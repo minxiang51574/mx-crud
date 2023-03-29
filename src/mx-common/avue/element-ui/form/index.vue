@@ -11,6 +11,7 @@
       :label-position="vaildData(formOption.labelPosition, config.labelPosition)"
       :size="formOption.size"
       :label-width="setPx(formOption.labelWidth, config.labelWidth)"
+      :rules="formRules"
     >
       <el-row>
         <template v-for="(column, cindex) in formOption.column">
@@ -94,6 +95,7 @@ export default create({
     return {
       config,
       form: {},
+      formRules: {},
     };
   },
   computed: {
@@ -113,6 +115,8 @@ export default create({
   created() {
     // 初始化表单
     this.dataformat();
+    // 初始化弹窗表单规则
+    this.rulesInit();
   },
 
   methods: {
@@ -127,7 +131,6 @@ export default create({
       Object.keys(this.value).forEach((ele) => {
         this.$set(this.form, ele, this.value[ele]);
       });
-      console.log("this.form", this.form);
       this.$emit("input", this.form);
     },
     /** 验证表单是否禁止 */
@@ -161,6 +164,18 @@ export default create({
     getLabelWidth(column) {
       const result = column.labelWidth || this.formOption.labelWidth;
       return this.setPx(result);
+    },
+    /** 校验表单的回调 */
+    validate(callback) {
+      this.$refs["form"].validate((valid) => callback(valid));
+    },
+    /**规则初始化 */
+    rulesInit() {
+      this.formOption.column.forEach((column) => {
+        if (column.rules && column.display !== false) {
+          this.$set(this.formRules, column.prop, column.rules);
+        }
+      });
     },
   },
 });

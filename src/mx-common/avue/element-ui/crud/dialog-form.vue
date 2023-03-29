@@ -122,11 +122,27 @@ export default create({
     },
     // 更新
     rowUpdate() {
-      console.log("更新", this.tableForm);
+      this.$refs["tableForm"].validate((vaild) => {
+        if (vaild) {
+          this.$parent.$emit(
+            "row-update",
+            this.deepClone(this.tableForm),
+            this.closeDialog
+          );
+        }
+      });
     },
     // 保存
     rowSave() {
-      console.log("保存", this.tableForm);
+      this.$refs["tableForm"].validate((vaild) => {
+        if (vaild) {
+          this.$parent.$emit(
+            "row-save",
+            this.deepClone(this.tableForm),
+            this.closeDialog
+          );
+        }
+      });
     },
   },
 });

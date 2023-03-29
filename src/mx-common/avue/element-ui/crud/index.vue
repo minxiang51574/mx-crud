@@ -257,11 +257,10 @@ export default create({
     //3.获取配置项
     configInit() {
       this.tableOption = this.deepClone(this.option);
-      // 初始化搜索配置
       this.initSearchOption();
       this.titleInit();
     },
-    // 4.初始化搜索配置
+    /** 4.初始化搜索配置 */
     initSearchOption() {
       const option = this.deepClone(this.propOption || []).filter(
         (item) => item.search === true
@@ -269,7 +268,7 @@ export default create({
       this.searchOption = option;
       console.log("搜索配置", this.searchOption);
     },
-    // 初始化标题
+    /** 初始化标题 */
     titleInit(title = "") {
       this.functionName = title || this.$route.meta.title;
     },
