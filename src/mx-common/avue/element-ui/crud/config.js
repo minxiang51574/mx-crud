@@ -6,10 +6,11 @@
 export default {
   align: 'left', //  表格列配置-对齐方式-默认
   indexLabel: '序号',
-  isShowmenu: true, // 是否显示操作栏
-  isViewBtn: true, // 是否显示查看
-  isEditBtn: true, // 是否显示编辑
-  isDelBtn: true, // 是否显示删除
+  isShowmenu: false, // 是否显示操作栏
+  menuWidth:200, // 操作栏宽度
+  isViewBtn: false, // 是否显示查看
+  isEditBtn: false, // 是否显示编辑
+  isDelBtn: false, // 是否显示删除
   labelPosition: "right", // 表单label的位置 
   labelWidth: 150, // 表单label的宽度
   border: true ,// 列表是否有border

@@ -40,7 +40,7 @@
     <el-table-column
       fixed="right"
       label="操作"
-      width="200px"
+      :width="vaildData(tableOption.menuWidth, config.menuWidth)"
       v-if="vaildData(tableOption.isShowmenu, config.isShowmenu)"
     >
       <template v-slot="{ row, $index }">

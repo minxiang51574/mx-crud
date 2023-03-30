@@ -1,8 +1,3 @@
-<!--
- * @Author: Mx
- * @Date: 2022-08-01 21:12:59
- * @Description: 
--->
 <template>
   <div class="home">
     <mx-crud
@@ -22,12 +17,12 @@
       @search-reset="resetList"
     >
       <template v-slot:zdy="{ row }">
-        {{ row }}
+        {{ row.id }}
       </template>
+      <!-- 搜索 自定义slot -->
+      <template v-slot:ageSearch="{ column }"> {{ column.prop }} </template>
       <!-- 操作栏配置-自定义操作栏 -->
-      <template #menu>
-        <el-button type="primary" size="mini">menu插槽按钮</el-button>
-      </template>
+      <template #menu="{ row }"> menu插槽 {{ row.name }}</template>
     </mx-crud>
   </div>
 </template>
@@ -58,6 +53,7 @@ export default {
     listOption() {
       return {
         isShowmenu: true, // 操作栏配置-是否显示操作栏
+        menuWidth: 300, // 操作栏宽度
         isViewBtn: true, // 操作栏配置-是否显示查看
         isEditBtn: true, // 操作栏配置-是否显示编辑
         isDelBtn: true, // 操作栏配置-是否显示删除
@@ -181,6 +177,12 @@ export default {
               message: "请输入",
               trigger: ["blur", "change"],
             },
+          },
+          {
+            label: "自定义列搜索",
+            prop: "age",
+            search: true,
+            searchslot: true,
           },
         ],
       };

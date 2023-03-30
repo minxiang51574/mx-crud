@@ -14,15 +14,27 @@
       @keyup.enter.native="searchChange"
     >
       <template v-for="(column, index) in $parent.searchOption">
-        <el-form-item :key="index" :prop="column.prop">
-          <!-- 自定义标签 -->
-          <template slot="label">
-            <span
-              :title="column.label ? (column.labelAlias || column.label) + ' :' : ''"
-              v-if="column.labelAlias || column.label"
-              >{{ column.label ? (column.labelAlias || column.label) + " :" : "" }}</span
-            >
-          </template>
+        <!-- 自定义列搜索 -->
+        <template v-if="column.searchslot">
+          <el-form-item
+            :prop="column.prop"
+            :key="index"
+            :label="(column.labelAlias || column.label) + ' :'"
+          >
+            <!-- 内容插槽 -->
+            <slot
+              :name="column.prop + 'Search'"
+              :column="column"
+              :form="searchForm"
+            ></slot>
+          </el-form-item>
+        </template>
+        <el-form-item
+          :key="index"
+          :prop="column.prop"
+          v-else
+          :label="(column.labelAlias || column.label) + ' :'"
+        >
           <component
             v-model="searchForm[column.prop]"
             :ref="column.prop"

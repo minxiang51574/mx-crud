@@ -57,7 +57,16 @@
       <div :class="b('right')"></div>
     </div>
     <!-- 搜索组件 -->
-    <HeaderSearch v-model="searchForm" ref="headerSearch"> </HeaderSearch>
+    <HeaderSearch v-model="searchForm" ref="headerSearch">
+      <template
+        v-for="item in searchOption"
+        slot-scope="{ column }"
+        :slot="item.prop + 'Search'"
+      >
+        <!-- 搜索 自定义slot -->
+        <slot v-if="item.searchslot" :column="column" :name="item.prop + 'Search'"></slot>
+      </template>
+    </HeaderSearch>
     <!-- 表格主体 -->
     <el-table
       :data="list"
@@ -73,7 +82,7 @@
         @row-edit="rowEdit"
         @custom-edit="customEdit"
       >
-        <!-- 每列的自定义slot -->
+        <!-- 每列 自定义slot -->
         <template v-for="item in propOption" slot-scope="scope" :slot="item.prop">
           <slot :row="scope.row" :name="item.prop"></slot>
         </template>
