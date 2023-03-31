@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <mx-crud
+      ref="crud"
       :data="tableList"
       :option="listOption"
       :page="page"
@@ -16,9 +17,16 @@
       @custom-edit="rowCustomEdit"
       @search-reset="resetList"
     >
-      <template v-slot:zdy="{ row }">
-        {{ row.id }}
+      <template v-slot:menuLeft>
+        <el-button
+          type="danger"
+          icon="el-icon-plus"
+          size="small"
+          @click="$refs.crud.rowAdd()"
+          >自定义头部按钮</el-button
+        >
       </template>
+      <template v-slot:zdy="{ row }"> 自定义列id:{{ row.id }} </template>
       <!-- 搜索 自定义slot -->
       <template v-slot:ageSearch="{ column }"> {{ column.prop }} </template>
       <!-- 操作栏配置-自定义操作栏 -->
@@ -54,6 +62,7 @@ export default {
       return {
         isShowmenu: true, // 操作栏配置-是否显示操作栏
         menuWidth: 300, // 操作栏宽度
+        addBtn: true, // 是否显示新增
         isViewBtn: true, // 操作栏配置-是否显示查看
         isEditBtn: true, // 操作栏配置-是否显示编辑
         isDelBtn: true, // 操作栏配置-是否显示删除
@@ -61,15 +70,16 @@ export default {
         exportRecordBtn: true, // 操作栏配置-导出记录
         align: "center", // 表格列配置-对齐方式
         index: true, // 表格列配置-索引
-        customAdd: false, // 自定义新增
-        customView: true, // 自定义查看
-        customEdit: false, // 自定义编辑
+        // customAdd: true, // 自定义新增回调
+        customView: true, // 自定义查看回调
+        customEdit: false, // 自定义编辑回调
         titleAliasEdit: "自定义title",
         column: [
           {
             label: "姓名1",
             labelAlias: "自定义label别名", // 弹窗表单配置 - 自定义label别名
             prop: "name",
+            align: "left",
             search: true, // 表格列配置-是否搜索
             width: 200, // 表格列配置-宽度
             rules: {

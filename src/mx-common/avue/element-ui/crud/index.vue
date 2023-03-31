@@ -53,7 +53,10 @@
         >
           重置
         </el-button>
+        <!-- 自定义按钮 -->
+        <slot name="menuLeft"></slot>
       </div>
+
       <div :class="b('right')"></div>
     </div>
     <!-- 搜索组件 -->

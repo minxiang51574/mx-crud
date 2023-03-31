@@ -191,9 +191,9 @@ listOption() {
 | isDelBtn   | 是否显示删除按钮 |  boolean |  false|
 | exportBtn  | 是否显示导出按钮 |  boolean |  |
 | exportRecordBtn  | 是否显示导出记录按钮 |  boolean |  |
-| customAdd  | 是否自定义新增 |  boolean |  |
-| customView  | 是否自定义查看 |  boolean |  |
-| customEdit  | 是否自定义编辑 |  boolean |  |
+| customAdd  | 是否自定义新增回调 |  boolean |  |
+| customView  | 是否自定义查看回调 |  boolean |  |
+| customEdit  | 是否自定义编辑回调 |  boolean |  |
 | titleAliasEdit  | 自定义新增编辑弹窗title |  string |  |
 
 ### Column属性
@@ -205,7 +205,7 @@ listOption() {
 | width  | 对应列的宽度  |  string |  |
 | search | 是否为搜索项   |  Boolean |  |
 | rules | 弹窗表单校验规则   |  object |  |
-| hide  | 列表项是否显示   |  Boolean |  |
+| hide  | 列表项是否显示   |  Boolean | false |
 | addDisplay  | 表单新增时项是否显示   |  Boolean |  |
 | editDisplay  | 表单编辑时项是否显示   |  Boolean |  |
 | viewDisplay  | 表单查看时项是否显示   |  Boolean |  |
@@ -278,14 +278,14 @@ listOption:{
 ## 四、操作栏设置 & 表格列配置
 
 ### 操作栏隐藏 & 其他属性
-> isShowmenu属性接受一个Boolean的属性达到隐藏操作栏的效果，默认为false
+> isShowmenu属性接受一个Boolean属性显示隐藏操作栏，默认为false
 > menuWidth属性设置操作栏宽度
 
 ### 自定义操作栏
 > menu为操作栏自定义
 ```html
 <!-- 操作栏配置-自定义操作栏 -->
- <template #menu="{ row }"> menu插槽 {{ row.name }}</template>
+<template #menu="{ row }"> menu插槽 {{ row.name }}</template>
 ```
 ![Image text](./src/assets/example/image3.png)
 
@@ -294,13 +294,253 @@ listOption:{
 > isEditBtn是否显示编辑按钮,默认false;
 > isDelBtn 是否显示删除按钮,默认false;
 
+### 列配置隐藏 & 其他属性
+> hide属性接受一个Boolean属性显示隐藏表格列，默认为false
+> width属性控制每列的宽度
+> align属性控制每列的对齐方式
+> overHidden设置true超出列表宽度内容以省略号显示
+
+### 自定义列
+> 设置列的属性slot为true时，在卡槽中用prop作为卡槽的名字即可
+```html
+<template v-slot:zdy="{ row }">
+    {{ row.prop }}
+</template>
+{
+  label: "自定义列",
+  prop: "zdy",
+  slot: true, // 表格列配置-自定义列
+},
+```
+![Image text](src/assets/example/image4.png)
+
+### 列内容格式化
+> formatter方法格式化内容
+```js
+{
+label: "状态formatter",
+prop: "status",
+formatter: (row) => {
+    const map = new Map([
+    [1, `<i class="class1"></i> 未开始`],
+    [2, `<i class="class2"></i> 成功`],
+    [3, `<i class="class3"></i> 已完成`],
+     ]);
+    return map.get(row.status);
+ }
+}
+```
+![Image text](src/assets/example/image5.png)
 
 
-## 五、按钮自定义 & 增删改查
+## 五、顶部按钮 & 自定义回调
+### 顶部按钮控制
+> addBtn 属性设置是否显示新增按钮,默认true;
+> 利用了menuLeft卡槽自定义顶部按钮
 
-## 六、配置接口
+### 自定义回调
+> customAdd 自定义新增回调
+```js
+<mx-crud
+  ref="crud"
+  :data="tableList"
+  :option="listOption"
+  @custom-add="rowCustomAdd">
+</mx-crud>
+listOption() {
+  return {
+      customAdd: true, // 自定义新增回调
+  }
+}
+```
+未设置时，默认打开新增弹窗表单；设置customAdd为ture时,增加custom-add回调,增加自定义处理。
 
-## 七、Mixins
+> customEdit 自定义编辑回调
+```js
+<mx-crud
+  ref="crud"
+  :data="tableList"
+  :option="listOption"
+  @custom-edit="rowCustomEdit">
+</mx-crud>
+listOption() {
+  return {
+      customEdit: true, // 自定义编辑回调
+  }
+}
+```
+未设置时，默认打开编辑弹窗表单；设置customEdit为ture时,增加custom-edit回调,增加自定义处理。
 
+> customView 自定义查看回调
+```js
+<mx-crud
+  ref="crud"
+  :data="tableList"
+  :option="listOption"
+  @custom-view="rowCustomView">
+</mx-crud>
+listOption() {
+  return {
+      customView: true, // 自定义查看回调
+  }
+}
+```
+未设置时，默认打开新增弹窗；设置customView为ture时,增加custom-view回调,增加自定义处理。
+
+
+## 六、提取Mixins & 增删改查封装
+
+### 公共Mixins
+> 提取公共Mixins,减少各个业务页面重复代码，包含page、tableList、loading属性，sizeChange、currentChange、增删改查方法等。自此业务开发时，只需要配置对应的option，及crud接口即可完成基本业务开发，效率提升杠杠的，重复低质的工作大幅度较少。
+
+### 配置接口 & 增删改查封装
+crud逻辑相对固定，抽取到mixin做相应封装处理。业务页面配置接口，mixin中调用
+```js
+  mixins: [mixin],
+  data() {
+    return {
+      COM_HTTP: {  // 配置接口
+        reqList: queryHomePageData, // 列表查询
+        reqDel: deleteHomePageData, //删除
+        reqAdd: addHomePageData, //新增
+        reqUpdate: updateHomePageData, //编辑
+      }
+    }
+  }
+```
+### 完整mixins
+> 详情见
+```js
+export default {
+  data() {
+    return {
+      COM_HTTP: {}, // 当前默认请求
+      tableList: [], // 表格列表数据
+      loading: false, // 加载控制
+      page: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 0,
+      },
+    };
+  },
+  mounted() {
+    this.searchFun();
+  },
+  methods: {
+    // 选择分页条数
+    sizeChange(val) {
+      this.page.currentPage = 1;
+      this.page.pageSize = val;
+      this.searchFun();
+    },
+    // 跳转页码
+    currentChange(val) {
+      this.page.currentPage = val;
+      this.searchFun();
+    },
+    // 触发按钮查询
+    searchChange(params) {
+      this.searchFun(params, 1);
+    },
+    /** 查询方法 */
+    async searchFun(params, currentPage) {
+      this.loading = true;
+      // 传入参数有current
+      if (currentPage) {
+        this.page.currentPage = currentPage;
+      }
+      const filnalParams = this.searchFunParamsHandle(params);
+      console.log('最后的请求参数filnalParams:', filnalParams);
+      const { data: res } = await this.COM_HTTP.reqList(filnalParams);
+      // 没做axios数据拦截 多一层结构
+      if (res.code === RESPONSE_CODE.SUCCESS) {
+        this.tableList = res.data.results || [];
+        this.page.total = res.data.total || 0;
+        this.page.currentPage = res.data.currentPage || 1;
+      } else {
+        this.$message.error(res.msg);
+      }
+      this.loading = false;
+    },
+    /** 列表查询参数处理 */
+    searchFunParamsHandle(params) {
+      let filnalParams = Object.assign(
+        { page: this.page.currentPage, pageSize: this.page.pageSize },
+        params
+      );
+      return filnalParams;
+    },
+    // 删除 - 提示弹窗
+    rowDel(row, index) {
+      const delTipMsg =
+        this.customDelMsg || this.delTipMsg || '确定删除该条数据?';
+      this.$confirm(delTipMsg, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        type: 'warning',
+      })
+        .then(() => {
+          // 开始删除
+          this.deleteFun(row, index);
+        })
+        .catch(() => {});
+    },
+    /**
+     * 增加方法
+     * @param {*} item  新增数据
+     * @param {*} doneCallback  执行完成回调
+     */
+    async addFun(item, doneCallback){
+      const { data: res } = await this.COM_HTTP.reqAdd(item)
+      // 没做axios数据拦截 多一层结构
+        if (res.code === RESPONSE_CODE.SUCCESS) {
+            this.$message.success('新增成功')
+            this.searchFun()
+            doneCallback()
+        } else {
+          this.$message.error(res.msg);
+        }
+    },
+    /**
+     * 编辑更新方法
+     * @param {*} item  新增数据
+     * @param {*} doneCallback  执行完成回调
+     */
+    async updateFun(item, doneCallback){
+      const { data: res } = await this.COM_HTTP.reqUpdate(item)
+      // 没做axios数据拦截 多一层结构
+        if (res.code === RESPONSE_CODE.SUCCESS) {
+            this.$message.success('新增成功')
+            this.searchFun()
+            doneCallback()
+        } else {
+          this.$message.error(res.msg);
+        }
+    },
+    // 删除方法
+    async deleteFun(item) {
+      // 调接口
+      const { data: res } = await this.COM_HTTP.reqDel(item)
+       // 没做axios数据拦截 多一层结构
+      if (res.code === RESPONSE_CODE.SUCCESS) {
+        this.$message.success('删除成功')
+      } else {
+        this.$message.error(res.msg);
+      }
+   
+    },
+    // 搜索清空
+    resetList() {
+      console.log('resetList');
+    },
+  },
+};
+```
+
+## 七、其他功能
+
+整个基本查询、列表、分页增删改查已基本完成。当然功能没有那么全，如很多table的熟悉配置和方法，如需要到组件源码中增加对应的配置即可。
 
 

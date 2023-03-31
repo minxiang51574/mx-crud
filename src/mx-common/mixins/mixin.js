@@ -29,7 +29,6 @@ export default {
     },
     // 跳转页码
     currentChange(val) {
-      console.log('跳转页码');
       this.page.currentPage = val;
       this.searchFun();
     },
@@ -39,7 +38,6 @@ export default {
     },
     /** 查询方法 */
     async searchFun(params, currentPage) {
-      console.log('searchFun');
       this.loading = true;
       // 传入参数有current
       if (currentPage) {
@@ -49,7 +47,6 @@ export default {
       console.log('最后的请求参数filnalParams:', filnalParams);
       const { data: res } = await this.COM_HTTP.reqList(filnalParams);
       // 没做axios数据拦截 多一层结构
-      console.log('res', res);
       if (res.code === RESPONSE_CODE.SUCCESS) {
         this.tableList = res.data.results || [];
         this.page.total = res.data.total || 0;
