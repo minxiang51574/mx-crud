@@ -1,9 +1,9 @@
 {
-  "name": "@mx/crud",
+  "name": "mx-crud",
   "version": "1.0.0",
-  "description": "",
-	"private": false,
-  "keyword":"mxcrud",
+  "description": "基于element-ui深度封装，旨在快速完成列表查询、增删改查、弹窗表单.",
+  "private": false,
+  "keyword": "mxcrud",
   "main": "lib/mx-crud.umd.min.js",
   "author": {
     "name": "mx"
@@ -53,5 +53,17 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minxiang51574/mx-crud.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minxiang51574/mx-crud/issues"
+  },
+  "homepage": "https://github.com/minxiang51574/mx-crud#readme"
 }
