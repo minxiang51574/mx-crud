@@ -3,9 +3,9 @@
  * @Date: 2023-03-16 09:34:38
  * @Description: 
  */
-import components from "./element-ui"
+import components from "./components"
 import { deepClone, vaildData,validatenull,setPx } from "./utils";
-
+import "./styles/index.scss"; // 自定义样式
 
 const install = function(Vue){
     //全局注册组件 组件名为组件的name

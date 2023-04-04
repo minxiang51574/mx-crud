@@ -132,7 +132,6 @@ export const getSearchType = (type) => {
  * 动态获取组件
  */
 export const getComponent = (type, component) => {
-  // 原avue组件
   let result = "input";
   if (!validatenull(component)) {
     result = component;

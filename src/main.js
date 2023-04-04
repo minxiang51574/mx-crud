@@ -13,9 +13,9 @@ import './mock';
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 
-// Avue组件库
-import Avue from "./mx-common/avue/index";
-Vue.use(Avue);
+// 组件库
+import mxCrud from "./packages/src/index";
+Vue.use(mxCrud);
 
 new Vue({
   router,

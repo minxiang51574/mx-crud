@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import mixin from "@/mx-common/mixins/mixin";
+import mixin from "@/packages/mixins/mixin";
 import {
   queryHomePageData,
   deleteHomePageData,
