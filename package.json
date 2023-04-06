@@ -1,6 +1,6 @@
 {
   "name": "mx-crud",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于element-ui深度封装，旨在快速完成列表查询、增删改查、弹窗表单.",
   "private": false,
   "keyword": "mxcrud",
