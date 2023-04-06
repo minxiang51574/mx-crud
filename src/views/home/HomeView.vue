@@ -36,7 +36,9 @@
 </template>
 
 <script>
-import mixin from "../../../packages/src/mixins/mixin";
+import crud from "mx-crud";
+// 调试或者自定义crud
+// import mixin from "../../../packages/src/mixins/mixin";
 
 import {
   queryHomePageData,
@@ -46,7 +48,7 @@ import {
 } from "@/api";
 export default {
   name: "HomeView",
-  mixins: [mixin],
+  mixins: [crud.mixin],
   data() {
     return {
       COM_HTTP: {

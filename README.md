@@ -1,11 +1,10 @@
-# Vue后台管理系统—— 提升工作效率300%一键配置crud
+# Vue2管理系统—— 一键配置crud提升效率300%
 > 本文主要基于element-ui深度封装，旨在快速完成列表查询、增删改查、弹窗表单。可以看到下面完整示例中包含了 Vue2后台管理系统中日常基本功能，代码量却非常少，可复用性非常高，6点下班美滋滋。
 
-
-<!-- github地址 不断更新维护 -->
+[github地址](https://github.com/minxiang51574/mx-crud) 不断更新维护，如果对你有帮助，帮忙加个star~
 ## 一、完整示例
-![Image text](./src/assets/example/image1.png)
 
+![image1.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d3d73b60ca7a4a2aaa5b6e4af9f68dbc~tplv-k3u1fbpfcp-watermark.image?)
 > 包含列表table、分页、搜索条件查询、新增、编辑、删除
 
 ``` html
@@ -163,7 +162,7 @@ listOption() {
       };
     },
 ```
-详情示例见xxx
+> [详情示例](https://github.com/minxiang51574/mx-crud/blob/main/src/views/home/HomeView.vue)
 
 ## 二、属性方法介绍
 这些属性方法使用频率较高，方法和属性都是在组件里抛出，当我们需要某些功能和配置
@@ -267,7 +266,7 @@ listOption:{
     }]
 }
 ```
-![Image text](./src/assets/example/image2.png)
+![image2.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0241d43f2ab94919a4c693afd9f5b65c~tplv-k3u1fbpfcp-watermark.image?)
 
 ### 页码和条数
 > currentPage当前页码，total总条数，pageSize每页多少条数据
@@ -284,7 +283,8 @@ listOption:{
 <!-- 操作栏配置-自定义操作栏 -->
 <template #menu="{ row }"> menu插槽 {{ row.name }}</template>
 ```
-![Image text](./src/assets/example/image3.png)
+
+![image3.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6398b3342ee6481890423cf4188e5d49~tplv-k3u1fbpfcp-watermark.image?)
 
 ### 操作栏查看、编辑、删除按钮设置
 > isViewBtn是否显示查看按钮,默认false;
@@ -309,7 +309,8 @@ listOption:{
   slot: true, // 表格列配置-自定义列
 },
 ```
-![Image text](src/assets/example/image4.png)
+
+![image4.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/aa8a0d21fa8f427a8406e67dad6a0a17~tplv-k3u1fbpfcp-watermark.image?)
 
 ### 列内容格式化
 > formatter方法格式化内容
@@ -327,7 +328,8 @@ formatter: (row) => {
  }
 }
 ```
-![Image text](src/assets/example/image5.png)
+
+![image5.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c57b549abd20400b94c750d4cdc7b909~tplv-k3u1fbpfcp-watermark.image?)
 
 
 ## 五、顶部按钮 & 自定义回调
@@ -406,7 +408,7 @@ crud逻辑相对固定，抽取到mixin做相应封装处理。业务页面配�
   }
 ```
 ### 完整mixins
-> 详情见
+> [详情](https://github.com/minxiang51574/mx-crud/tree/main/packages/src/mixins)
 ```js
 export default {
   data() {
@@ -544,4 +546,6 @@ export default {
 
 ## 八、最后
 我更推荐的是屏幕前的你看懂封装的思路，几年前的我初次使用和浏览时，直呼666，算是小开了眼界；整个代码量不是很大，逻辑也比较简单，一两把游戏的时间足已；看懂之后增加日常业务开发需求的功能，信手拈来。将整体完全消化吸收，逐步拓展成公司组件库，妥妥的KPI，提高整体前端的开发效率。
+
+[github地址](https://github.com/minxiang51574/mx-crud) 不断更新维护，如果对你有帮助，帮忙加个star~
 

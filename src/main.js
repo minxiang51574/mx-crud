@@ -14,11 +14,10 @@ Vue.use(ElementUI);
 Vue.config.productionTip = false;
 
 // 组件库
-// import mxCrud from "mx-crud";
+import mxCrud from "mx-crud";
+import 'mx-crud/lib/mx-crud.css';
 // 调试或者自定义crud
-import mxCrud from "../packages/src/index";
-console.log('mxCrud',mxCrud);
-
+// import mxCrud from "../packages/src/index";
 Vue.use(mxCrud);
 
 new Vue({
