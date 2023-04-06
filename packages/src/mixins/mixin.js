@@ -3,7 +3,7 @@
  * @Date: 2023-03-22 10:09:58
  * @Description: mixins
  */
-import { RESPONSE_CODE } from '../src/core/constant';
+import { RESPONSE_CODE } from '../core/constant';
 export default {
   data() {
     return {

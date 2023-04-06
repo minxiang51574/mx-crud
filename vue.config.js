@@ -4,6 +4,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 const config = {
+  productionSourceMap: false,
   // 自定义webpack配置
   configureWebpack: {
     resolve: {

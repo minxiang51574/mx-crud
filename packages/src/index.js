@@ -4,6 +4,7 @@
  * @Description: 
  */
 import components from "./components"
+import mixin from "./mixins/mixin";
 import { deepClone, vaildData,validatenull,setPx } from "./utils";
 import "./styles/index.scss"; // 自定义样式
 
@@ -20,5 +21,6 @@ const install = function(Vue){
 
 export default {
     version:"1.0.0", 
-    install
+    install,
+    mixin
 }
