@@ -1,4 +1,4 @@
-# Vue2管理系统—— 一键配置crud提升效率300%
+# Vue2管理系统一键配置crud提升效率300%
 > 本文主要基于element-ui深度封装，旨在快速完成列表查询、增删改查、弹窗表单。可以看到下面完整示例中包含了 Vue2后台管理系统中日常基本功能，代码量却非常少，可复用性非常高，6点下班美滋滋。
 
 [github地址](https://github.com/minxiang51574/mx-crud) 不断更新维护，如果对你有帮助，帮忙加个star~
@@ -542,6 +542,16 @@ export default {
 
 整个基本查询、列表、分页增删改查已基本完成。当然功能没有面面俱到，如很多table的属性配置和方法，到组件源码中增加对应的配置即可
 如需请留言我会补上你所需的功能场景。后续：逐步完善功能，如果有人看，继续封装一个Vue3版本。
+
+### 引入方法
+初步发布了一个npm包，大家可下载使用，更建议下载整个项目，结合示例看懂源码
+```js
+// 组件库
+import mxCrud from "mx-crud";
+import 'mx-crud/lib/mx-crud.css';
+// 调试或者自定义crud
+// import mxCrud from "../packages/src/index";
+```
 
 
 ## 八、最后
