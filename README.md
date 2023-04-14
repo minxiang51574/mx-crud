@@ -3,6 +3,7 @@
 
 [github地址](https://github.com/minxiang51574/mx-crud) 不断更新维护，如果对你有帮助，帮忙加个star~
 ## 一、完整示例
+在线访问地址:http://minxiang.site/crud/
 
 ![image1.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d3d73b60ca7a4a2aaa5b6e4af9f68dbc~tplv-k3u1fbpfcp-watermark.image?)
 > 包含列表table、分页、搜索条件查询、新增、编辑、删除

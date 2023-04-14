@@ -5,6 +5,7 @@ function resolve(dir) {
 }
 const config = {
   productionSourceMap: false,
+  publicPath: process.env.NODE_ENV === 'development' ? '/' : '/crud/',
   // 自定义webpack配置
   configureWebpack: {
     resolve: {
